@@ -19,6 +19,12 @@ export default {
       }
       return true;
     },
+    // jwt: async ({ token, user, account, profile }) => {
+    //   // add user id to the token right after the user logs in
+    //   if (user) {
+    //     token.id = user. as string;
+    //   }
+    // },
   },
   theme: {
     logo: "https://authjs.dev/img/logo-sm.png",

@@ -25,8 +25,9 @@ model User {
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  CreateBlink CreateBlink[]
 }
 
 model Account {
@@ -82,4 +83,12 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
+}
+
+model CreateBlink {
+  id           String  @id
+  userId       String
+  user         User    @relation(fields: [userId], references: [id])
+  data         Json
+  doneCreating Boolean
 }

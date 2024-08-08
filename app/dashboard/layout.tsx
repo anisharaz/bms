@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
 import "./dashboard.css";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import NavOptions from "./NavOptions";
+import LogoutButton from "../AppComponents/LogoutButton";
 
 async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const user = await auth();
@@ -15,16 +15,17 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
             <AvatarImage src="https://github.com/shadcn.png" />
           </Avatar>
           <div>
-            <div className="text-xl">Anish Araz</div>
+            <div className="text-xl">{user?.user?.name || "USER"}</div>
             <div className="flex gap-1 items-center">
               <div
-                className={`bg-${
-                  premium ? "amber" : "slate"
-                }-400 h-3 w-3 text-sm rounded-full`}
+                className={`${
+                  premium ? "bg-amber-400" : "bg-slate-400"
+                } h-3 w-3 text-sm rounded-full`}
               ></div>
               <div className="opacity-50">{premium ? "Premium" : "Free"}</div>
             </div>
           </div>
+          <LogoutButton />
         </div>
         <div className="flex flex-col gap-5 pt-20">
           <NavOptions />

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "./globals.css";
 import { AuthSessionProvider } from "./context/AuthSessionProvider";
+import WalletContextProvider from "./context/WalletProvider";
 
 const lato = Lato({ weight: "400", subsets: ["latin"] });
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthSessionProvider>
-        <body className={lato.className}>{children}</body>
+        <body className={lato.className}>
+          <WalletContextProvider>{children}</WalletContextProvider>
+        </body>
       </AuthSessionProvider>
     </html>
   );
