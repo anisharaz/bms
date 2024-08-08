@@ -2,7 +2,7 @@ import HomePage from "./HomePage/main";
 
 function Root() {
   return (
-    <div>
+    <div className="">
       <HomePage />
     </div>
   );

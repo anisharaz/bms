@@ -1,0 +1,8 @@
+.left-section,
+.right-section {
+    height: calc(100vh - 10px);
+    max-height: calc(100vh - 10px);
+}
+.premium {
+    box-shadow: 0 0 20px 5px rgb(251, 255, 0);
+}
