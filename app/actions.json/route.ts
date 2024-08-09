@@ -7,6 +7,10 @@ export function GET(req: NextRequest) {
   return NextResponse.json({
     rules: [
       {
+        pathPattern: `${req.nextUrl.origin}/viewblink/**`,
+        apiPath: `${req.nextUrl.origin}/api/blink/**`,
+      },
+      {
         pathPattern: `${req.nextUrl.origin}/**`,
         apiPath: `${req.nextUrl.origin}/**`,
       },

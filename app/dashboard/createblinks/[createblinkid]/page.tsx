@@ -12,15 +12,16 @@ async function CreateBlinkForm({
       id: params.createblinkid,
     },
   });
+  const blink_url = blinkData?.productionready
+    ? `http://localhost:3000/api/blink/${params.createblinkid}`
+    : `http://localhost:3000/api/createblinklive/${params.createblinkid}`;
   return (
     <div className="main">
       <div className="main-child-1 p-2">
         <CreateForm blinkid={params.createblinkid} />
       </div>
       <div className="main-child-2">
-        <ActionRenderer
-          ActionUrl={`http://localhost:3000/api/createblinklive/${params.createblinkid}`}
-        />
+        <ActionRenderer ActionUrl={blink_url} />
       </div>
     </div>
   );

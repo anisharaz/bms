@@ -17,12 +17,3 @@ export async function GET(
   }
   return NextResponse.json(BlinkData?.data);
 }
-
-// TODO: build this method
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { tempid: string } }
-) {
-  const body = await request.json();
-  return NextResponse.json({ success: true });
-}

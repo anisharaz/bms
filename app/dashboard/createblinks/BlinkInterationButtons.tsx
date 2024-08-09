@@ -70,11 +70,14 @@ export function ToggleActive({
 }
 
 // TODO: add copy link functionality
-export function CopyLink() {
+export function CopyLink({ id }: { id: string }) {
   return (
     <Button
-      onClick={(e) => {
+      onClick={async (e) => {
         e.stopPropagation();
+        navigator.clipboard.writeText(
+          `${window.location.origin}/viewblink/${id}`
+        );
       }}
     >
       Copy <ClipboardListIcon />

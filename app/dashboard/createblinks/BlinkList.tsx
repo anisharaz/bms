@@ -31,7 +31,7 @@ export default function BlinkList({
               {index + 1}
             </div>
             <div className="flex gap-1">
-              <CopyLink />
+              <CopyLink id={d.id} />
               <DeleteButton id={d.id} />
               <ToggleActive production={d.productionReady} id={d.id} />
             </div>
