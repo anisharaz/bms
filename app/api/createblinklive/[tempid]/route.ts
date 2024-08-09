@@ -1,25 +1,24 @@
-import {
-  ServerActionState,
-  ServerActionStateArray,
-} from "@/app/ServerStates/CreateBlinkState";
+import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-export function GET(
+export async function GET(
   request: Request,
   { params }: { params: { tempid: string } }
 ) {
-  const foundIndex = ServerActionStateArray.findIndex((d) => {
-    d.instanceID === params.tempid;
+  const BlinkData = await prisma.createBlink.findFirst({
+    where: {
+      id: params.tempid,
+    },
   });
-  if (foundIndex != -1) {
-    return NextResponse.json(ServerActionStateArray[foundIndex].data);
-  } else {
-    const newState = new ServerActionState();
-    newState.instanceID = params.tempid;
-    ServerActionStateArray.push(newState);
-    return NextResponse.json(newState.data);
+  if (BlinkData?.productionready == true) {
+    return NextResponse.json(
+      { error: "Blink is already in production" },
+      { status: 400 }
+    );
   }
+  return NextResponse.json(BlinkData?.data);
 }
 
+// TODO: build this method
 export async function POST(
   request: NextRequest,
   { params }: { params: { tempid: string } }

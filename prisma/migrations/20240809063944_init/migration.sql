@@ -68,6 +68,7 @@ CREATE TABLE "CreateBlink" (
     "userId" TEXT NOT NULL,
     "data" JSONB NOT NULL,
     "doneCreating" BOOLEAN NOT NULL,
+    "productionready" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "CreateBlink_pkey" PRIMARY KEY ("id")
 );

@@ -8,6 +8,7 @@ function LogoutButton() {
       onClick={() => {
         signOut();
       }}
+      variant={"destructive"}
     >
       Logout
     </Button>

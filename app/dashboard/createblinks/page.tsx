@@ -12,8 +12,9 @@ async function CreateBlinkPage() {
       CreateBlink: true,
     },
   });
+  // TODO: add validation on how much blink one can create
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 p-4">
       <div>
         <CreateBlinkButton />
       </div>

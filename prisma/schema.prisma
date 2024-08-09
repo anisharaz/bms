@@ -86,9 +86,10 @@ model Authenticator {
 }
 
 model CreateBlink {
-  id           String  @id
-  userId       String
-  user         User    @relation(fields: [userId], references: [id])
-  data         Json
-  doneCreating Boolean
+  id              String  @id
+  userId          String
+  user            User    @relation(fields: [userId], references: [id])
+  data            Json
+  doneCreating    Boolean
+  productionready Boolean @default(false)
 }

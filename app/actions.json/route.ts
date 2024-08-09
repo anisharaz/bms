@@ -7,7 +7,7 @@ export function GET(req: NextRequest) {
     rules: [
       {
         pathPattern: `${req.nextUrl.origin}/**`,
-        apiPath: `${req.nextUrl.origin}/actions/**`,
+        apiPath: `${req.nextUrl.origin}/**`,
       },
     ],
   });

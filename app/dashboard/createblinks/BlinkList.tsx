@@ -10,6 +10,7 @@ export default function BlinkList({
   index: number;
 }) {
   const router = useRouter();
+  // TODO: add activate and deactivate functionality using production values in database
   return (
     <div
       className="border border-gray-500 p-2 flex flex-col gap-2 cursor-pointer hover:bg-gray-100 rounded-sm m-1"
