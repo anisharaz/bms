@@ -1,7 +1,7 @@
 "use client";
 import { createblink } from "@/app/action/database";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader2, RefreshCcwIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,20 +18,34 @@ function CreateBlinkButton() {
       Please wait..
     </Button>
   ) : (
-    <Button
-      onClick={async () => {
-        setLoading(true);
-        const tempid = uuid({});
-        await createblink({
-          email: user.data?.user?.email as string,
-          id: tempid,
-        });
-        router.push(`/dashboard/createblinks/${tempid}`);
-      }}
-      size={"lg"}
-    >
-      New Blink
-    </Button>
+    <>
+      <div className="flex gap-2">
+        <Button
+          onClick={async () => {
+            setLoading(true);
+            const tempid = uuid({});
+            await createblink({
+              email: user.data?.user?.email as string,
+              id: tempid,
+            });
+            router.push(`/dashboard/createblinks/${tempid}`);
+          }}
+          size={"lg"}
+        >
+          New Blink
+        </Button>
+        <button
+          className="hover:bg-slate-200 rounded-lg p-2"
+          onClick={() => {
+            if (window) {
+              window.location.reload();
+            }
+          }}
+        >
+          <RefreshCcwIcon className=" " />
+        </button>
+      </div>
+    </>
   );
 }
 

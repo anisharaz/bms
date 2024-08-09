@@ -87,6 +87,7 @@ model Authenticator {
 
 model CreateBlink {
   id              String  @id
+  name            String  @default("Edit Blink Name")
   userId          String
   user            User    @relation(fields: [userId], references: [id])
   data            Json

@@ -18,7 +18,13 @@ async function CreateBlinkPage() {
       <div>
         <CreateBlinkButton />
       </div>
-      <div>
+      <div
+        style={{
+          overflowY: "scroll",
+          maxHeight: "90vh",
+        }}
+        className="flex flex-col gap-2"
+      >
         {user_data?.CreateBlink.map((d, index) => {
           return (
             <BlinkList
@@ -26,6 +32,8 @@ async function CreateBlinkPage() {
               d={{
                 id: d.id,
                 doneCreating: d.doneCreating,
+                productionReady: d.productionready,
+                BlinkName: d.name,
               }}
               index={index}
             />

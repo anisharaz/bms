@@ -73,10 +73,12 @@ function CreateForm({ blinkid }: { blinkid: string }) {
       newInstance.data.links.actions = actionData;
     }
     // TODO: add error handling
-    // TODO: add page reloading
     await addBlinkData({ blinkid, data: newInstance.data });
     setLoading(false);
-    alert("Update Success , RELOAD the page to see the changes");
+    alert("Update Success");
+    if (window) {
+      window.location.reload();
+    }
   }
 
   return (
@@ -286,6 +288,7 @@ function CreateForm({ blinkid }: { blinkid: string }) {
       >
         Update & Save
       </Button>
+
       <div className="mt-10">
         <div className="text-2xl font-bold underline underline-offset-4">
           Preview
