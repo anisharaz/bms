@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { LinkedAction } from "@solana/actions";
 import { addBlinkData } from "@/app/action/database";
-import { useRouter } from "next/navigation";
 
 type blinkButtonElement = {
   id: string;
@@ -18,8 +17,9 @@ type blinkInputElement = {
 
 // TODO: add loading state
 // TODO: add image upload
+// TODO: add form validation
 function CreateForm({ blinkid }: { blinkid: string }) {
-  const router = useRouter();
+  const [walletAddress, setWalletAddress] = useState("");
   const [loading, setLoading] = useState(false);
   const [mainHeading, setMainHeading] = useState({
     title: "Title",
@@ -44,21 +44,22 @@ function CreateForm({ blinkid }: { blinkid: string }) {
     setLoading(true);
     let hostname: string = "";
     if (window) {
-      hostname = window.location.hostname;
+      hostname = window.location.origin;
     }
     const newInstance = new ServerActionState();
     newInstance.data.title = mainHeading.title;
     newInstance.data.description = mainHeading.description;
     newInstance.data.label = "";
+    newInstance.walletaddress = walletAddress;
     const actionData: LinkedAction[] = blinkButtonElement.map((e) => {
       return {
-        href: `${hostname}/api/blink/blinkid/?amount=${e.button_value}`,
+        href: `${hostname}/api/blink/${blinkid}/?amount=${e.button_value}`,
         label: e.button_label,
       };
     });
     if (blinkInputElement != null) {
       actionData.push({
-        href: `${hostname}/api/blink/blinkid/?amount={amount}`,
+        href: `${hostname}/api/blink/${blinkid}/?amount={amount}`,
         label: blinkInputElement.input_button_value,
         parameters: [
           {
@@ -73,7 +74,11 @@ function CreateForm({ blinkid }: { blinkid: string }) {
       newInstance.data.links.actions = actionData;
     }
     // TODO: add error handling
-    await addBlinkData({ blinkid, data: newInstance.data });
+    await addBlinkData({
+      blinkid,
+      data: newInstance.data,
+      walletaddress: walletAddress,
+    });
     setLoading(false);
     alert("Update Success");
     if (window) {
@@ -123,7 +128,23 @@ function CreateForm({ blinkid }: { blinkid: string }) {
         </div>
         <div>
           <div className="text-2xl underline underline-offset-4 mb-2">
-            Button Element
+            Wallet Address <span className="text-red-500">*</span>
+          </div>
+          <label htmlFor="description" className="text-xl mr-1 text-gray-600">
+            Wallet Address
+          </label>
+          <input
+            type="text"
+            id="description"
+            className="rounded-full p-1 m-1 bg-neutral-200 w-80"
+            onChange={(e) => setWalletAddress(e.target.value)}
+            value={walletAddress}
+            required
+          />
+        </div>
+        <div>
+          <div className="text-2xl underline underline-offset-4 mb-2">
+            Button Element <span className="text-red-500">*</span>
           </div>
           <div>
             <label
@@ -291,7 +312,7 @@ function CreateForm({ blinkid }: { blinkid: string }) {
 
       <div className="mt-10">
         <div className="text-2xl font-bold underline underline-offset-4">
-          Preview
+          Inputs Preview
         </div>
         <div className="mt-2">
           NOTE: Click add button to reflect change here

@@ -10,7 +10,7 @@ async function ViewBlink({ params }: { params: { blinkid: string } }) {
 
   return blink != null ? (
     <div className="mt-2">
-      {blink.productionready ? (
+      {blink.productionready && blink.doneCreating ? (
         <div
           style={{
             maxWidth: "500px",
@@ -29,9 +29,7 @@ async function ViewBlink({ params }: { params: { blinkid: string } }) {
     </div>
   ) : (
     <div className="flex justify-center">
-      <div className="text-3xl font-bold p-4">
-        Invalid ID or Blink Not ready
-      </div>
+      <div className="text-3xl font-bold p-4">Invalid Blink</div>
     </div>
   );
 }

@@ -35,9 +35,11 @@ export async function createblink({
 export async function addBlinkData({
   blinkid,
   data,
+  walletaddress,
 }: {
   blinkid: string;
   data: any;
+  walletaddress: string;
 }) {
   const update = await prisma.createBlink.update({
     where: {
@@ -46,6 +48,7 @@ export async function addBlinkData({
     data: {
       data: data,
       doneCreating: true,
+      walletaddredd: walletaddress,
     },
   });
   revalidatePath("/dashboard/createblinks/[createblinkid]", "page");

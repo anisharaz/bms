@@ -24,7 +24,7 @@ function ActionRenderer({ ActionUrl }: { ActionUrl: string }) {
       />
     </>
   ) : (
-    <div>Null</div>
+    <div>Loading.....</div>
   );
 }
 

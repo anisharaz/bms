@@ -86,11 +86,14 @@ model Authenticator {
 }
 
 model CreateBlink {
-  id              String  @id
-  name            String  @default("Edit Blink Name")
+  id              String   @id
+  name            String   @default("Edit Blink Name")
   userId          String
-  user            User    @relation(fields: [userId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
   data            Json
   doneCreating    Boolean
-  productionready Boolean @default(false)
+  productionready Boolean  @default(false)
+  walletaddredd   String   @default("")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

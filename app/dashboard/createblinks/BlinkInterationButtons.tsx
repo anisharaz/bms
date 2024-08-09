@@ -78,6 +78,7 @@ export function CopyLink({ id }: { id: string }) {
         navigator.clipboard.writeText(
           `${window.location.origin}/viewblink/${id}`
         );
+        alert("Link copied to clipboard");
       }}
     >
       Copy <ClipboardListIcon />
