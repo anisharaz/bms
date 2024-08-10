@@ -6,12 +6,12 @@ export function GET(req: NextRequest) {
   return NextResponse.json({
     rules: [
       {
-        pathPattern: `${req.nextUrl.origin}/viewblink/**`,
-        apiPath: `${req.nextUrl.origin}/api/blink/**`,
+        pathPattern: `${process.env.HOST_URL}/viewblink/**`,
+        apiPath: `${process.env.HOST_URL}/api/blink/**`,
       },
       {
-        pathPattern: `${req.nextUrl.origin}/**`,
-        apiPath: `${req.nextUrl.origin}/**`,
+        pathPattern: `${process.env.HOST_URL}/**`,
+        apiPath: `${process.env.HOST_URL}/**`,
       },
     ],
   });
