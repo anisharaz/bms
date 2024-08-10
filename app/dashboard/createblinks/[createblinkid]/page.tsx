@@ -18,8 +18,8 @@ async function CreateBlinkForm({
   });
 
   const blink_url = blinkData?.productionready
-    ? `http://localhost:3000/api/blink/${params.createblinkid}`
-    : `http://localhost:3000/api/createblinklive/${params.createblinkid}`;
+    ? `${process.env.HOST_URL}/api/blink/${params.createblinkid}`
+    : `${process.env.HOST_URL}/api/createblinklive/${params.createblinkid}`;
   return (
     <div className="main">
       <div className="main-child-1 p-2">
