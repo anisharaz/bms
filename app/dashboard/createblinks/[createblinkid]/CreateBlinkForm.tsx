@@ -18,7 +18,6 @@ type blinkInputElement = {
   input_button_value: string;
 };
 
-// TODO: add image upload
 function CreateBlinkForm({
   blinkid,
   presignedurl,
