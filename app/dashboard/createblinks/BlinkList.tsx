@@ -16,7 +16,6 @@ export default function BlinkList({
   index: number;
 }) {
   const router = useRouter();
-  // TODO: add activate and deactivate functionality using production values in database
   return (
     <>
       <div className="flex border border-gray-500 rounded-md">
@@ -52,7 +51,7 @@ export default function BlinkList({
                 d.doneCreating ? "bg-green-400" : "bg-red-300"
               }  py-1 px-2 rounded-full`}
             >
-              {d.doneCreating ? "Completed" : "In Progress"}
+              {d.doneCreating ? "Ready" : "In Progress"}
             </span>
           </div>
         </div>

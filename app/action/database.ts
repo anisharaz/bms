@@ -51,20 +51,30 @@ export async function addBlinkData({
   data: any;
   walletaddress: string;
 }) {
-  const update = await prisma.createBlink.update({
-    where: {
-      id: blinkid,
-    },
-    data: {
-      data: data,
-      doneCreating: true,
-      walletaddredd: walletaddress,
-    },
-  });
-  revalidatePath("/dashboard/createblinks/[createblinkid]", "page");
-  revalidatePath("/api/createblinklive/");
-  revalidatePath(`/dashboard/createblinks/`);
-  return update;
+  try {
+    const update = await prisma.createBlink.update({
+      where: {
+        id: blinkid,
+      },
+      data: {
+        data: data,
+        doneCreating: true,
+        walletaddress: walletaddress,
+      },
+    });
+    revalidatePath("/dashboard/createblinks/[createblinkid]", "page");
+    revalidatePath("/api/createblinklive/");
+    revalidatePath(`/dashboard/createblinks/`);
+    return {
+      success: true,
+      message: "",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error,
+    };
+  }
 }
 
 export async function DeleteBlink({ id }: { id: string }) {

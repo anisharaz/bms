@@ -32,10 +32,7 @@ export async function POST(
   { params }: { params: { blinkid: string } }
 ) {
   const amount = req.nextUrl.searchParams.get("amount");
-  console.log(amount);
   const { account } = await req.json();
-  console.log(account);
-  console.log(params.blinkid);
   const Blink = await prisma.createBlink.findFirst({
     where: {
       id: params.blinkid,
@@ -49,7 +46,7 @@ export async function POST(
     });
   }
 
-  const myaccount = new PublicKey(Blink?.walletaddredd as string);
+  const myaccount = new PublicKey(Blink?.walletaddress as string);
   const senderaccount = new PublicKey(account);
   const connection = new Connection(process.env.RPC_URL as string); // Add your rpc url here for better performance
 

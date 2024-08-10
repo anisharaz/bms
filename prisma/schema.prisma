@@ -93,7 +93,7 @@ model CreateBlink {
   data            Json
   doneCreating    Boolean
   productionready Boolean  @default(false)
-  walletaddredd   String   @default("")
+  walletaddress   String   @default("")
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }

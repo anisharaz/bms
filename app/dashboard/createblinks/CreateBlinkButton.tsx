@@ -8,7 +8,6 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 
 function CreateBlinkButton() {
-  // TODO: add loading button feature
   const router = useRouter();
   const user = useSession();
   const [loading, setLoading] = useState(false);

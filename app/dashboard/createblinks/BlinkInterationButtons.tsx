@@ -69,7 +69,6 @@ export function ToggleActive({
   );
 }
 
-// TODO: add copy link functionality
 export function CopyLink({ id }: { id: string }) {
   return (
     <Button

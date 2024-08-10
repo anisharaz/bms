@@ -19,9 +19,20 @@ type blinkInputElement = {
 };
 
 // TODO: add image upload
-// TODO: add form validation
-function CreateBlinkForm({ blinkid }: { blinkid: string }) {
+function CreateBlinkForm({
+  blinkid,
+  presignedurl,
+  fields,
+}: {
+  blinkid: string;
+  presignedurl: string;
+  fields: Record<string, string>;
+}) {
   const wallet = useWallet();
+  const [file, setFile] = useState<File | null>(null);
+  const fileChange = (e: any) => {
+    setFile(e.target.files[0]);
+  };
   const [walletAddress, setWalletAddress] = useState("");
   const [loading, setLoading] = useState(false);
   const [mainHeading, setMainHeading] = useState({
@@ -44,6 +55,10 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
   });
 
   async function handleSubmit() {
+    if (walletAddress == "" && !wallet.connected) {
+      alert("Please enter wallet address or connect wallet");
+      return;
+    }
     setLoading(true);
     let hostname: string = "";
     if (window) {
@@ -53,7 +68,9 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
     newInstance.data.title = mainHeading.title;
     newInstance.data.description = mainHeading.description;
     newInstance.data.label = "";
-    newInstance.walletaddress = walletAddress;
+    newInstance.walletaddress = wallet.connected
+      ? (wallet.publicKey?.toBase58() as string)
+      : walletAddress;
     const actionData: LinkedAction[] = blinkButtonElement.map((e) => {
       return {
         href: `${hostname}/api/blink/${blinkid}/?amount=${e.button_value}`,
@@ -76,14 +93,38 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
     if (newInstance.data.links?.actions != undefined) {
       newInstance.data.links.actions = actionData;
     }
-    // TODO: add error handling
-    await addBlinkData({
-      blinkid,
-      data: newInstance.data,
-      walletaddress: walletAddress,
+    const formData = new FormData();
+    Object.entries(fields).forEach(([key, value]) => {
+      formData.append(key, value);
     });
+    formData.append("file", file as File);
+    const response = await fetch(presignedurl, {
+      method: "POST",
+      body: formData,
+    });
+    if (!response.ok) {
+      alert("Image Upload Failed! Try Again");
+    } else {
+      const data = await response.text();
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(data, "text/xml");
+      const imageLocation =
+        xmlDoc.getElementsByTagName("Location")[0]?.childNodes[0]?.nodeValue;
+      let IMGURL = new URL(imageLocation as string);
+      IMGURL.hostname = "dalrhzyq3imlu.cloudfront.net";
+      newInstance.data.icon = IMGURL.toString();
+      const res = await addBlinkData({
+        blinkid,
+        data: newInstance.data,
+        walletaddress: newInstance.walletaddress,
+      });
+      if (res.success) {
+        alert("Blink updated successfully");
+      } else {
+        alert("Error occured try again");
+      }
+    }
     setLoading(false);
-    alert("Update Success");
     if (window) {
       window.location.reload();
     }
@@ -150,6 +191,23 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
         </div>
         <div>
           <div className="text-2xl underline underline-offset-4 mb-2">
+            Blink Image{" "}
+            <span className="text-red-500 text-lg">
+              * <span>(JPG Only)</span>
+            </span>
+          </div>
+          <div>
+            <input
+              type="file"
+              id="image"
+              onChange={fileChange}
+              accept=".jpg"
+              className="block w-full mt-5 text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            />
+          </div>
+        </div>
+        <div>
+          <div className="text-2xl underline underline-offset-4 mb-2">
             Button Element <span className="text-red-500">*</span>
           </div>
 
@@ -175,7 +233,7 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
-                placeholder="Button Label"
+                placeholder="Button Value"
                 onChange={(e) =>
                   setAddButtonElement({
                     ...addButtonElement,
@@ -311,6 +369,7 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
             setLoading(false);
           }}
           className="text-xl p-6"
+          disabled={blinkButtonElement.length == 0}
         >
           Update & Save
         </Button>

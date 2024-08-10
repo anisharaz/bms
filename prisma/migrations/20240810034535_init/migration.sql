@@ -65,10 +65,14 @@ CREATE TABLE "Authenticator" (
 -- CreateTable
 CREATE TABLE "CreateBlink" (
     "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL DEFAULT 'Edit Blink Name',
     "userId" TEXT NOT NULL,
     "data" JSONB NOT NULL,
     "doneCreating" BOOLEAN NOT NULL,
     "productionready" BOOLEAN NOT NULL DEFAULT false,
+    "walletaddress" TEXT NOT NULL DEFAULT '',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "CreateBlink_pkey" PRIMARY KEY ("id")
 );
