@@ -22,10 +22,14 @@ export async function GET(
     },
   });
   if (BlinkData?.productionready == true && BlinkData.doneCreating == true) {
-    return NextResponse.json(BlinkData?.data);
+    return NextResponse.json(BlinkData?.data, {
+      headers: ACTIONS_CORS_HEADERS,
+    });
   }
   return NextResponse.json("Blink not ready yet");
 }
+
+export const OPTIONS = GET;
 
 export async function POST(
   req: NextRequest,

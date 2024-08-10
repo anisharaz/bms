@@ -1,5 +1,26 @@
 import ActionRenderer from "@/app/dashboard/createblinks/[createblinkid]/ActionRenderer";
 import prisma from "@/lib/db";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { blinkid: string };
+}): Promise<Metadata> {
+  const blink = await prisma.createBlink.findUnique({
+    where: {
+      id: params.blinkid,
+    },
+  });
+  return {
+    // @ts-ignore
+    title: blink?.data?.title,
+    openGraph: {
+      // @ts-ignore
+      images: [blink?.data?.icon],
+    },
+  };
+}
 
 async function ViewBlink({ params }: { params: { blinkid: string } }) {
   const blink = await prisma.createBlink.findUnique({
@@ -21,7 +42,7 @@ async function ViewBlink({ params }: { params: { blinkid: string } }) {
                 className="m-auto"
               >
                 <ActionRenderer
-                  ActionUrl={`${process.env.HOST_URL}/viewblink/${params.blinkid}`}
+                  ActionUrl={`${process.env.NEXTAUTH_URL}/viewblink/${params.blinkid}`}
                 />
               </div>
             ) : (
