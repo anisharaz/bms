@@ -178,7 +178,7 @@ function CreateBlinkForm({
       <form action="" className="flex flex-col gap-4">
         <div>
           <div className="text-2xl underline underline-offset-4 mb-2">
-            Button Element <span className="text-red-500">*</span>
+            Button Element
           </div>
 
           <div className="flex gap-2 mb-2">

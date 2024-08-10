@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// TODO: edit the rules for production
 export function GET(req: NextRequest) {
   console.log(req.nextUrl.origin);
 

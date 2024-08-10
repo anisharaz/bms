@@ -26,7 +26,9 @@ async function ViewBlink({ params }: { params: { blinkid: string } }) {
               </div>
             ) : (
               <div className="flex justify-center">
-                <div className="text-3xl font-bold p-4">Blink Not Ready</div>
+                <div className="text-3xl font-bold p-4">
+                  Blink Not In Production
+                </div>
               </div>
             )}
           </div>
