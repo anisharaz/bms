@@ -38,4 +38,4 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           script: |
-            ls && pwd
+            cd bms_dep && docker-compose down && docker-compose pull && docker-compose up -d
