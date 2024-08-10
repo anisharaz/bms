@@ -14,6 +14,7 @@
     "@aws-sdk/s3-presigned-post": "^3.627.0",
     "@dialectlabs/blinks": "^0.7.0",
     "@radix-ui/react-avatar": "^1.1.0",
+    "@radix-ui/react-hover-card": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@solana/actions": "^1.6.1",
     "@solana/wallet-adapter-base": "^0.9.23",
