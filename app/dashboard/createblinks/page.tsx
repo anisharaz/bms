@@ -4,13 +4,22 @@ import { auth } from "@/auth";
 import BlinkList from "./BlinkList";
 async function CreateBlinkPage() {
   const user = await auth();
-  const user_data = await prisma.user.findFirst({
+  const user_db = await prisma.user.findFirst({
     where: {
       email: user?.user?.email,
     },
     include: {
       CreateBlink: true,
     },
+  });
+  user_db?.CreateBlink.sort((a, b) => {
+    if (a.doneCreating === b.doneCreating) {
+      return 0;
+    }
+    if (a.doneCreating) {
+      return 1;
+    }
+    return -1;
   });
   return (
     <div className="flex flex-col gap-3 p-4">
@@ -19,12 +28,12 @@ async function CreateBlinkPage() {
       </div>
       <div
         style={{
-          overflowY: "scroll",
+          overflowY: "auto",
           maxHeight: "90vh",
         }}
         className="flex flex-col gap-2"
       >
-        {user_data?.CreateBlink.map((d, index) => {
+        {user_db?.CreateBlink.map((d, index) => {
           return (
             <BlinkList
               key={d.id}

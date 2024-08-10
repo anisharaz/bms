@@ -4,30 +4,31 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@/auth";
 import LoginButton from "./LoginButton";
 import { LayoutDashboardIcon } from "lucide-react";
+import Link from "next/link";
 
 async function AppBar() {
   const user = await auth();
   return (
-    <div className="py-2">
-      <div className="bg-[#000000] rounded-full lg:py-2 py-1 lg:max-w-screen-xl max-w-screen-md m-auto flex justify-around">
-        <div className="flex justify-center items-center gap-2">
-          <Image src={BmsLogo} alt="" className="w-7 h-7" />
-          <div className="text-xl underline underline-offset-2 text-white">
-            BMS
-          </div>
-        </div>
+    <nav className="shadow-lg h-14 flex items-center justify-between ">
+      <a href="/" className="p-4 font-bold text-2xl flex items-center gap-2">
+        <div>BMS</div>
+        <Image src={BmsLogo} alt="" className="w-7 h-7" />
+      </a>
+      <div className="px-6">
         <div>
           {user ? (
-            <Button variant={"outline"} className="text-lg">
-              Dashboard
-              <LayoutDashboardIcon />{" "}
-            </Button>
+            <Link href={"/dashboard"}>
+              <Button variant={"outline"} className="text-lg">
+                Dashboard
+                <LayoutDashboardIcon />{" "}
+              </Button>
+            </Link>
           ) : (
             <LoginButton />
           )}
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
 

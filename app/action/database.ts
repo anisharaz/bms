@@ -94,16 +94,37 @@ export async function ToggleProductionReady({
   id: string;
   production: boolean;
 }) {
-  const updatedBlink = await prisma.createBlink.update({
-    where: {
-      id: id,
-    },
-    data: {
-      productionready: production,
-    },
-  });
-  // add 1 second delay to simulate server response
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  revalidatePath(`/dashboard/createblinks/`);
-  return updatedBlink;
+  try {
+    const getBlink = await prisma.createBlink.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    if (!getBlink?.doneCreating) {
+      return {
+        success: false,
+        message: "Blink is not ready",
+      };
+    }
+    const updatedBlink = await prisma.createBlink.update({
+      where: {
+        id: id,
+      },
+      data: {
+        productionready: production,
+      },
+    });
+    // add 500ms delay to simulate server response
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    revalidatePath(`/dashboard/createblinks/`);
+    return {
+      success: true,
+      message: "",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error,
+    };
+  }
 }

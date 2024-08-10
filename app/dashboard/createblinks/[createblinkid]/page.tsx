@@ -29,7 +29,7 @@ async function CreateBlinkForm({
           fields={fields}
         />
       </div>
-      <div className="main-child-2 ">
+      <div className="main-child-2 sticky top-0 ">
         <div className="text-center text-3xl mb-3 underline underline-offset-4">
           Current Blink
         </div>

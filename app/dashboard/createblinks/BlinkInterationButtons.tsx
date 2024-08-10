@@ -47,7 +47,13 @@ export function ToggleActive({
       onClick={async (e) => {
         e.stopPropagation();
         setLoading(true);
-        await ToggleProductionReady({ id: id, production: !production });
+        const res = await ToggleProductionReady({
+          id: id,
+          production: !production,
+        });
+        if (!res.success) {
+          alert(res.message);
+        }
         setLoading(false);
       }}
       className="bg-green-700 hover:bg-green-800"
@@ -59,7 +65,13 @@ export function ToggleActive({
       onClick={async (e) => {
         e.stopPropagation();
         setLoading(true);
-        await ToggleProductionReady({ id: id, production: !production });
+        const res = await ToggleProductionReady({
+          id: id,
+          production: !production,
+        });
+        if (!res.success) {
+          alert(res.message);
+        }
         setLoading(false);
       }}
       className="bg-red-700 hover:bg-red-800"

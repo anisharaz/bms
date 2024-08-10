@@ -28,6 +28,7 @@ function CreateBlinkForm({
   fields: Record<string, string>;
 }) {
   const wallet = useWallet();
+  const [blinkName, setBlinkName] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const fileChange = (e: any) => {
     setFile(e.target.files[0]);
@@ -56,6 +57,10 @@ function CreateBlinkForm({
   async function handleSubmit() {
     if (walletAddress == "" && !wallet.connected) {
       alert("Please enter wallet address or connect wallet");
+      return;
+    }
+    if (file == null) {
+      alert("Please select an image file");
       return;
     }
     setLoading(true);
@@ -131,80 +136,46 @@ function CreateBlinkForm({
 
   return (
     <div className="flex flex-col gap-4">
+      <div className="">
+        <div className="text-2xl font-bold underline underline-offset-4">
+          Mocked Preview
+        </div>
+        <div className="mt-2">
+          NOTE: Edit & Click add button to reflect change here
+        </div>
+        <div className="border bg-[#202327] rounded-2xl border-sky-400 shadow-sky-400 shadow p-3 flex flex-col gap-3">
+          <div className="">
+            <div className="text-white text-lg">{mainHeading.title}</div>
+            <div className="text-gray-400">{mainHeading.description}</div>
+          </div>
+          <div className="flex justify-around gap-3">
+            {blinkButtonElement?.map((e) => {
+              return (
+                <Button
+                  key={e.id}
+                  className="bg-sky-500 hover:bg-sky-600 rounded-full w-full text-white text-2xl"
+                >
+                  {e.button_label}
+                </Button>
+              );
+            })}
+          </div>
+          {blinkInputElement && (
+            <div className="flex rounded-full p-2 m-1 bg-[#202327] border border-gray-600 w-full h-16 items-center">
+              <input
+                type="text"
+                className="w-full bg-transparent "
+                placeholder={blinkInputElement.input_label}
+                disabled
+              />
+              <Button className="bg-sky-500 rounded-full p-6 text-white text-2xl hover:bg-sky-600">
+                {blinkInputElement.input_button_value}
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
       <form action="" className="flex flex-col gap-4">
-        <div>
-          <div className="text-2xl underline underline-offset-4 mb-2">
-            Main Heading
-          </div>
-          <div className="flex gap-2">
-            <div className="w-full md:w-1/2 ">
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                id="grid-first-name"
-                type="text"
-                placeholder="Title for Blink"
-                onChange={(e) =>
-                  setMainHeading({
-                    ...mainHeading,
-                    title: e.target.value || "Title",
-                  })
-                }
-              />
-            </div>
-            <div className="w-full md:w-1/2 ">
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                id="grid-first-name"
-                type="text"
-                placeholder="Description for Blink"
-                onChange={(e) =>
-                  setMainHeading({
-                    ...mainHeading,
-                    description: e.target.value || "Description",
-                  })
-                }
-              />
-            </div>
-          </div>
-        </div>
-        <div>
-          <div className="text-2xl underline underline-offset-4 mb-2">
-            Wallet Address <span className="text-red-500">*</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-full md:w-1/2">
-              <input
-                className={`appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-                  wallet.connected && "opacity-50"
-                }`}
-                id="grid-first-name"
-                type="text"
-                placeholder="Wallet Address"
-                onChange={(e) => setWalletAddress(e.target.value)}
-                disabled={wallet.connected}
-              />
-            </div>
-            <div>or</div>
-            <WalletButton />
-          </div>
-        </div>
-        <div>
-          <div className="text-2xl underline underline-offset-4 mb-2">
-            Blink Image{" "}
-            <span className="text-red-500 text-lg">
-              * <span>(JPG Only)</span>
-            </span>
-          </div>
-          <div>
-            <input
-              type="file"
-              id="image"
-              onChange={fileChange}
-              accept=".jpg"
-              className="block w-full mt-5 text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-            />
-          </div>
-        </div>
         <div>
           <div className="text-2xl underline underline-offset-4 mb-2">
             Button Element <span className="text-red-500">*</span>
@@ -331,6 +302,91 @@ function CreateBlinkForm({
             Add Input
           </Button>
         </div>
+        <div>
+          <div className="text-2xl underline underline-offset-4 mb-2">
+            Blink Name
+          </div>
+          <input
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+            id="grid-first-name"
+            type="text"
+            placeholder="Name of Blink"
+            onChange={(e) => setBlinkName(e.target.value || "Blink Name")}
+          />
+        </div>
+        <div>
+          <div className="text-2xl underline underline-offset-4 mb-2">
+            Main Heading
+          </div>
+          <div className="flex gap-2">
+            <div className="w-full md:w-1/2 ">
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                id="grid-first-name"
+                type="text"
+                placeholder="Title for Blink"
+                onChange={(e) =>
+                  setMainHeading({
+                    ...mainHeading,
+                    title: e.target.value || "Title",
+                  })
+                }
+              />
+            </div>
+            <div className="w-full md:w-1/2 ">
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                id="grid-first-name"
+                type="text"
+                placeholder="Description for Blink"
+                onChange={(e) =>
+                  setMainHeading({
+                    ...mainHeading,
+                    description: e.target.value || "Description",
+                  })
+                }
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="text-2xl underline underline-offset-4 mb-2">
+            Wallet Address <span className="text-red-500">*</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-full md:w-1/2">
+              <input
+                className={`appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
+                  wallet.connected && "opacity-50"
+                }`}
+                id="grid-first-name"
+                type="text"
+                placeholder="Wallet Address"
+                onChange={(e) => setWalletAddress(e.target.value)}
+                disabled={wallet.connected}
+              />
+            </div>
+            <div>or</div>
+            <WalletButton />
+          </div>
+        </div>
+        <div>
+          <div className="text-2xl underline underline-offset-4 mb-2">
+            Blink Image{" "}
+            <span className="text-red-500 text-lg">
+              * <span>(JPG Only)</span>
+            </span>
+          </div>
+          <div>
+            <input
+              type="file"
+              id="image"
+              onChange={fileChange}
+              accept=".jpg"
+              className="block w-full mt-5 text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            />
+          </div>
+        </div>
       </form>
       <Button
         className="bg-red-200 hover:bg-red-300 text-black"
@@ -368,51 +424,11 @@ function CreateBlinkForm({
             setLoading(false);
           }}
           className="text-xl p-6"
-          disabled={blinkButtonElement.length == 0}
+          disabled={blinkButtonElement.length == 0 && blinkInputElement == null}
         >
           Update & Save
         </Button>
       )}
-
-      <div className="mt-10">
-        <div className="text-2xl font-bold underline underline-offset-4">
-          Mock Preview
-        </div>
-        <div className="mt-2">
-          NOTE: Click add button to reflect change here
-        </div>
-        <div className="border border-black bg-[#202327] rounded-lg m-4 p-3 flex flex-col gap-3">
-          <div className="">
-            <div className="text-white text-lg">{mainHeading.title}</div>
-            <div className="text-gray-400">{mainHeading.description}</div>
-          </div>
-          <div className="flex justify-around gap-3">
-            {blinkButtonElement?.map((e) => {
-              return (
-                <button
-                  key={e.id}
-                  className="bg-sky-500 hover:bg-sky-600 rounded-full p-2 w-full text-white font-bold"
-                >
-                  {e.button_label}
-                </button>
-              );
-            })}
-          </div>
-          {blinkInputElement && (
-            <div className="flex rounded-full p-2 m-1 bg-[#202327] border border-gray-600 w-full h-16 items-center">
-              <input
-                type="text"
-                className="w-full bg-transparent "
-                placeholder={blinkInputElement.input_label}
-                disabled
-              />
-              <Button className="bg-sky-500 rounded-full p-6 text-white font-bold text-2xl hover:bg-sky-600">
-                {blinkInputElement.input_button_value}
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
     </div>
   );
 }

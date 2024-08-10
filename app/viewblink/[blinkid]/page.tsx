@@ -12,7 +12,13 @@ async function ViewBlink({ params }: { params: { blinkid: string } }) {
     <>
       <div className="flex flex-col gap-4">
         <nav className="shadow-2xl h-14 flex items-center justify-between">
-          <div className="p-4 font-bold text-2xl">BMS</div>
+          <a
+            href="https://solaction.aaraz.me/"
+            target="_blank"
+            className="p-4 font-bold text-2xl"
+          >
+            BMS
+          </a>
           <a
             href="https://solaction.aaraz.me/"
             target="_blank"
