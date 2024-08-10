@@ -5,7 +5,6 @@ import {
   createPostResponse,
 } from "@solana/actions";
 import {
-  clusterApiUrl,
   Connection,
   LAMPORTS_PER_SOL,
   PublicKey,
@@ -28,7 +27,6 @@ export async function GET(
   return NextResponse.json("Blink not ready yet");
 }
 
-// TODO: build this method
 export async function POST(
   req: NextRequest,
   { params }: { params: { blinkid: string } }

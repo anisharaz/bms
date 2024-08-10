@@ -1,6 +1,6 @@
 import prisma from "@/lib/db";
 import ActionRenderer from "./ActionRenderer";
-import CreateForm from "./CreateForm";
+import CreateForm from "./CreateBlinkForm";
 import "./createblink.css";
 async function CreateBlinkForm({
   params,

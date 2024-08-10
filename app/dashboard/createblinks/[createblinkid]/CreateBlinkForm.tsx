@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { LinkedAction } from "@solana/actions";
 import { addBlinkData } from "@/app/action/database";
+import WalletButton from "@/app/AppComponents/WalletButton";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 type blinkButtonElement = {
   id: string;
@@ -18,7 +20,8 @@ type blinkInputElement = {
 // TODO: add loading state
 // TODO: add image upload
 // TODO: add form validation
-function CreateForm({ blinkid }: { blinkid: string }) {
+function CreateBlinkForm({ blinkid }: { blinkid: string }) {
+  const wallet = useWallet();
   const [walletAddress, setWalletAddress] = useState("");
   const [loading, setLoading] = useState(false);
   const [mainHeading, setMainHeading] = useState({
@@ -130,17 +133,28 @@ function CreateForm({ blinkid }: { blinkid: string }) {
           <div className="text-2xl underline underline-offset-4 mb-2">
             Wallet Address <span className="text-red-500">*</span>
           </div>
-          <label htmlFor="description" className="text-xl mr-1 text-gray-600">
-            Wallet Address
-          </label>
-          <input
-            type="text"
-            id="description"
-            className="rounded-full p-1 m-1 bg-neutral-200 w-80"
-            onChange={(e) => setWalletAddress(e.target.value)}
-            value={walletAddress}
-            required
-          />
+          <div className="flex items-center gap-2">
+            <WalletButton />
+            <div>or</div>
+            <label
+              htmlFor="description"
+              className={`text-xl mr-1 text-gray-600 ${
+                wallet.connected && "opacity-50"
+              }`}
+            >
+              Wallet Address
+            </label>
+            <input
+              type="text"
+              id="description"
+              className={`rounded-full p-1 m-1 bg-neutral-200 w-80 ${
+                wallet.connected && "opacity-50"
+              }`}
+              onChange={(e) => setWalletAddress(e.target.value)}
+              value={walletAddress}
+              disabled={wallet.connected}
+            />
+          </div>
         </div>
         <div>
           <div className="text-2xl underline underline-offset-4 mb-2">
@@ -353,4 +367,4 @@ function CreateForm({ blinkid }: { blinkid: string }) {
   );
 }
 
-export default CreateForm;
+export default CreateBlinkForm;
