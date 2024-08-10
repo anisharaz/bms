@@ -1,11 +1,12 @@
 "use client";
-import { ServerActionState } from "@/app/ServerStates/CreateBlinkState";
+import { SolanaActionsSpecClass } from "@/lib/SolanaActionsSpecClass";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { LinkedAction } from "@solana/actions";
 import { addBlinkData } from "@/app/action/database";
 import WalletButton from "@/app/AppComponents/WalletButton";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { Loader2 } from "lucide-react";
 
 type blinkButtonElement = {
   id: string;
@@ -17,7 +18,6 @@ type blinkInputElement = {
   input_button_value: string;
 };
 
-// TODO: add loading state
 // TODO: add image upload
 // TODO: add form validation
 function CreateBlinkForm({ blinkid }: { blinkid: string }) {
@@ -49,7 +49,7 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
     if (window) {
       hostname = window.location.origin;
     }
-    const newInstance = new ServerActionState();
+    const newInstance = new SolanaActionsSpecClass();
     newInstance.data.title = mainHeading.title;
     newInstance.data.description = mainHeading.description;
     newInstance.data.label = "";
@@ -96,37 +96,35 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
           <div className="text-2xl underline underline-offset-4 mb-2">
             Main Heading
           </div>
-          <div>
-            <label htmlFor="title" className="text-xl mr-1 text-gray-600">
-              Title
-            </label>
-            <input
-              type="text"
-              id="title"
-              className="rounded-full p-1 m-1 bg-neutral-200"
-              onChange={(e) =>
-                setMainHeading({
-                  ...mainHeading,
-                  title: e.target.value || "Title",
-                })
-              }
-            />
-          </div>
-          <div>
-            <label htmlFor="description" className="text-xl mr-1 text-gray-600">
-              Description
-            </label>
-            <input
-              type="text"
-              id="description"
-              className="rounded-full p-1 m-1 bg-neutral-200 w-80"
-              onChange={(e) =>
-                setMainHeading({
-                  ...mainHeading,
-                  description: e.target.value || "Description",
-                })
-              }
-            />
+          <div className="flex gap-2">
+            <div className="w-full md:w-1/2 ">
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                id="grid-first-name"
+                type="text"
+                placeholder="Title for Blink"
+                onChange={(e) =>
+                  setMainHeading({
+                    ...mainHeading,
+                    title: e.target.value || "Title",
+                  })
+                }
+              />
+            </div>
+            <div className="w-full md:w-1/2 ">
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                id="grid-first-name"
+                type="text"
+                placeholder="Description for Blink"
+                onChange={(e) =>
+                  setMainHeading({
+                    ...mainHeading,
+                    description: e.target.value || "Description",
+                  })
+                }
+              />
+            </div>
           </div>
         </div>
         <div>
@@ -134,71 +132,59 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
             Wallet Address <span className="text-red-500">*</span>
           </div>
           <div className="flex items-center gap-2">
-            <WalletButton />
+            <div className="w-full md:w-1/2">
+              <input
+                className={`appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
+                  wallet.connected && "opacity-50"
+                }`}
+                id="grid-first-name"
+                type="text"
+                placeholder="Wallet Address"
+                onChange={(e) => setWalletAddress(e.target.value)}
+                disabled={wallet.connected}
+              />
+            </div>
             <div>or</div>
-            <label
-              htmlFor="description"
-              className={`text-xl mr-1 text-gray-600 ${
-                wallet.connected && "opacity-50"
-              }`}
-            >
-              Wallet Address
-            </label>
-            <input
-              type="text"
-              id="description"
-              className={`rounded-full p-1 m-1 bg-neutral-200 w-80 ${
-                wallet.connected && "opacity-50"
-              }`}
-              onChange={(e) => setWalletAddress(e.target.value)}
-              value={walletAddress}
-              disabled={wallet.connected}
-            />
+            <WalletButton />
           </div>
         </div>
         <div>
           <div className="text-2xl underline underline-offset-4 mb-2">
             Button Element <span className="text-red-500">*</span>
           </div>
-          <div>
-            <label
-              htmlFor="button_label"
-              className="text-xl mr-1 text-gray-600"
-            >
-              Button Label
-            </label>
-            <input
-              type="text"
-              id="button_label"
-              className="rounded-full p-1 m-1 bg-neutral-200"
-              onChange={(e) =>
-                setAddButtonElement({
-                  ...addButtonElement,
-                  button_label: e.target.value,
-                })
-              }
-              value={addButtonElement.button_label}
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="button_value"
-              className="text-xl mr-1 text-gray-600"
-            >
-              Button Value
-            </label>
-            <input
-              type="text"
-              id="button_value"
-              className="rounded-full p-1 m-1 bg-neutral-200"
-              onChange={(e) =>
-                setAddButtonElement({
-                  ...addButtonElement,
-                  button_value: e.target.value,
-                })
-              }
-              value={addButtonElement.button_value}
-            />
+
+          <div className="flex gap-2 mb-2">
+            <div className="w-full md:w-1/2 ">
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                id="grid-first-name"
+                type="text"
+                placeholder="Button Label"
+                onChange={(e) =>
+                  setAddButtonElement({
+                    ...addButtonElement,
+                    button_label: e.target.value,
+                  })
+                }
+                value={addButtonElement.button_label}
+              />
+            </div>
+
+            <div className="w-full md:w-1/2 ">
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                id="grid-first-name"
+                type="text"
+                placeholder="Button Label"
+                onChange={(e) =>
+                  setAddButtonElement({
+                    ...addButtonElement,
+                    button_value: e.target.value,
+                  })
+                }
+                value={addButtonElement.button_value}
+              />
+            </div>
           </div>
           <Button
             onClick={(e) => {
@@ -224,47 +210,46 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
               });
             }}
           >
-            Add
+            Add Button
           </Button>
         </div>
         <div>
           <div className="text-2xl underline underline-offset-4 mb-2">
             Input Area
           </div>
-          <div>
-            <label htmlFor="input_label" className="text-xl mr-1 text-gray-600">
-              Input Label
-            </label>
-            <input
-              type="text"
-              id="input_label"
-              className="rounded-full p-1 m-1 bg-neutral-200"
-              onChange={(e) =>
-                setAddInputElement({
-                  ...addInputElement,
-                  input_label: e.target.value,
-                })
-              }
-              value={addInputElement.input_label}
-            />
+          <div className="flex gap-2 mb-2">
+            <div className="w-full md:w-1/2 ">
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                id="grid-first-name"
+                type="text"
+                placeholder="Input Label"
+                onChange={(e) =>
+                  setAddInputElement({
+                    ...addInputElement,
+                    input_label: e.target.value,
+                  })
+                }
+                value={addInputElement.input_label}
+              />
+            </div>
+            <div className="w-full md:w-1/2 ">
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                id="grid-first-name"
+                type="text"
+                placeholder="Input Button Label"
+                onChange={(e) =>
+                  setAddInputElement({
+                    ...addInputElement,
+                    input_button_value: e.target.value,
+                  })
+                }
+                value={addInputElement.input_button_value}
+              />
+            </div>
           </div>
-          <div>
-            <label htmlFor="input_value" className="text-xl mr-1 text-gray-600">
-              Input Button Label
-            </label>
-            <input
-              type="text"
-              id="input_value"
-              className="rounded-full p-1 m-1 bg-neutral-200"
-              onChange={(e) =>
-                setAddInputElement({
-                  ...addInputElement,
-                  input_button_value: e.target.value,
-                })
-              }
-              value={addInputElement.input_button_value}
-            />
-          </div>
+
           <Button
             onClick={(e) => {
               e.preventDefault();
@@ -286,7 +271,7 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
             }}
             disabled={blinkInputElement == null ? false : true}
           >
-            Add
+            Add Input
           </Button>
         </div>
       </form>
@@ -312,21 +297,28 @@ function CreateBlinkForm({ blinkid }: { blinkid: string }) {
       >
         Reset All
       </Button>
-      <Button
-        onClick={async (e) => {
-          e.preventDefault();
-          setLoading(true);
-          await handleSubmit();
-          setLoading(false);
-        }}
-        className="text-xl p-6"
-      >
-        Update & Save
-      </Button>
+      {loading ? (
+        <Button disabled size={"lg"}>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Please wait..
+        </Button>
+      ) : (
+        <Button
+          onClick={async (e) => {
+            e.preventDefault();
+            setLoading(true);
+            await handleSubmit();
+            setLoading(false);
+          }}
+          className="text-xl p-6"
+        >
+          Update & Save
+        </Button>
+      )}
 
       <div className="mt-10">
         <div className="text-2xl font-bold underline underline-offset-4">
-          Inputs Preview
+          Mock Preview
         </div>
         <div className="mt-2">
           NOTE: Click add button to reflect change here

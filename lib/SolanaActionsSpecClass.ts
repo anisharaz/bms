@@ -1,7 +1,6 @@
 import { ActionGetResponse, LinkedAction } from "@solana/actions";
 
-// TODO: make the action move extensive and move the file to type folder
-export class ServerActionState {
+export class SolanaActionsSpecClass {
   public instanceID: string = "";
   public walletaddress: string = "";
   public Actions: LinkedAction[] = [

@@ -1,8 +1,7 @@
 "use server";
 
-// TODO: add error handling
 import prisma from "@/lib/db";
-import { ServerActionState } from "../ServerStates/CreateBlinkState";
+import { SolanaActionsSpecClass } from "../../lib/SolanaActionsSpecClass";
 import { revalidatePath } from "next/cache";
 
 export async function createblink({
@@ -12,7 +11,7 @@ export async function createblink({
   email: string;
   id: string;
 }) {
-  const newInstance = new ServerActionState();
+  const newInstance = new SolanaActionsSpecClass();
   newInstance.instanceID = id;
 
   const user = await prisma.user.findFirst({
@@ -20,15 +19,26 @@ export async function createblink({
       email: email,
     },
   });
-  return await prisma.createBlink.create({
-    data: {
-      id: id,
-      userId: user?.id as string,
-      doneCreating: false,
-      data: newInstance.data as any,
-      name: "Edit Blink Name",
-    },
-  });
+  try {
+    await prisma.createBlink.create({
+      data: {
+        id: id,
+        userId: user?.id as string,
+        doneCreating: false,
+        data: newInstance.data as any,
+        name: "Edit Blink Name",
+      },
+    });
+    return {
+      success: true,
+      message: "",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error,
+    };
+  }
 }
 
 // TODO: add feature to partially update data

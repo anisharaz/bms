@@ -20,8 +20,13 @@ async function CreateBlinkForm({
       <div className="main-child-1 p-2">
         <CreateForm blinkid={params.createblinkid} />
       </div>
-      <div className="main-child-2">
-        <ActionRenderer ActionUrl={blink_url} />
+      <div className="main-child-2 ">
+        <div className="text-center text-3xl mb-3 underline underline-offset-4">
+          Live Blink
+        </div>
+        <div className="shadow-2xl shadow-black rounded-2xl">
+          <ActionRenderer ActionUrl={blink_url} />
+        </div>
       </div>
     </div>
   );

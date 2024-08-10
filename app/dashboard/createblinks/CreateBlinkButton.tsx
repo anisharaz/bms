@@ -24,10 +24,16 @@ function CreateBlinkButton() {
           onClick={async () => {
             setLoading(true);
             const tempid = uuid({});
-            await createblink({
+
+            const res = await createblink({
               email: user.data?.user?.email as string,
               id: tempid,
             });
+            if (res.success === false) {
+              alert("Something went try again");
+              setLoading(false);
+              return;
+            }
             router.push(`/dashboard/createblinks/${tempid}`);
           }}
           size={"lg"}

@@ -10,7 +10,7 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
+    --primary: 212 100% 61%;
     --primary-foreground: 0 0% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
@@ -91,8 +91,7 @@ React Wallet css start
 }
 
 .wallet-adapter-button-trigger {
-  /* background-color: #512da8; */
-  background-color: hsl(240 5.9% 10%);
+  background-color: hsl(212 100% 61%);
 }
 
 .wallet-adapter-button:not([disabled]):focus-visible {
@@ -100,7 +99,7 @@ React Wallet css start
 }
 
 .wallet-adapter-button:not([disabled]):hover {
-  background-color: hsl(240 5.9% 20%);
+  background-color: hsl(212, 100%, 64%);
 }
 
 .wallet-adapter-button[disabled] {
