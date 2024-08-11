@@ -17,8 +17,8 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
       <div className="left-section rounded-lg  min-w-72 overflow-hidden border border-gray-400">
         <div className="flex gap-4 py-4 items-center justify-around border-b border-gray-400">
           <div className="flex gap-10">
-            <Avatar className={`h-12 w-12 ${premium ? "premium" : ""}`}>
-              <AvatarImage src="https://github.com/shadcn.png" />
+            <Avatar className={`h-12 w-12 ${premium && "premium"}`}>
+              <AvatarImage src={`${user_db?.image}`} />
             </Avatar>
             <div>
               <div className="text-xl">{user?.user?.name || "USER"}</div>

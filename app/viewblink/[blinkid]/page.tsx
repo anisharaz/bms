@@ -15,9 +15,15 @@ export async function generateMetadata({
   return {
     // @ts-ignore
     title: blink?.data?.title,
+    // @ts-ignore
+    description: blink?.data?.description,
     openGraph: {
-      // @ts-ignore
-      images: [blink?.data?.icon],
+      images: [
+        {
+          // @ts-ignore
+          url: blink?.data?.icon,
+        },
+      ],
     },
   };
 }
