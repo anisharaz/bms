@@ -9,22 +9,46 @@ async function AccountPage() {
     where: {
       email: user_session?.user?.email as string,
     },
+    include: {
+      Blinks: true,
+    },
   });
-  const premium = true;
+  const premium = user_db?.premium;
   return (
-    <div className="mx-6 my-4">
-      <div className="flex justify-between items-center  rounded-lg border-gray-400 border p-4">
+    <div className="mx-6 my-4 flex flex-col gap-4">
+      <div>
+        <div className="flex justify-between items-center p-4">
+          <div>
+            {premium ? (
+              <div className="text-xl font-bold">Welcome Back !!</div>
+            ) : (
+              <Button className="text-black bg-gradient-to-tr from-amber-200 to-amber-500 hover:shadow-md hover:shadow-amber-500">
+                Get Premium
+              </Button>
+            )}
+          </div>
+          <div>
+            <LogoutButton />
+          </div>
+        </div>
+      </div>
+      <div className="border-gray-400 border rounded-lg p-4 text-xl">
         <div>
-          {premium ? (
-            <div className="text-xl font-bold">Welcome Back !!</div>
-          ) : (
-            <Button className="text-black/50 bg-gradient-to-tr from-amber-200 to-amber-500 hover:shadow-md hover:shadow-amber-500">
-              Get Premium
-            </Button>
-          )}
+          Blinks: <span>{user_db?.Blinks.length}</span>
         </div>
         <div>
-          <LogoutButton />
+          Production Blinks:{" "}
+          <span>
+            {(function () {
+              let production_blink_count = 0;
+              user_db?.Blinks.forEach((blink) => {
+                if (blink.productionready) {
+                  production_blink_count++;
+                }
+              });
+              return production_blink_count;
+            })()}
+          </span>
         </div>
       </div>
     </div>

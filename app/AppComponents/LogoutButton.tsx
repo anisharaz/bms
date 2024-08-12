@@ -6,7 +6,9 @@ function LogoutButton() {
   return (
     <Button
       onClick={() => {
-        signOut();
+        signOut({
+          callbackUrl: "/",
+        });
       }}
       variant={"destructive"}
     >

@@ -20,7 +20,7 @@ export default function BlinkList({
     <>
       <div className="flex border border-gray-500 rounded-md">
         <div
-          className="flex-1 p-2 flex flex-col gap-2 cursor-pointer hover:bg-gray-200 rounded-sm bg-gray-100"
+          className="flex-1 p-2 flex flex-col gap-2 cursor-pointer rounded-sm bg-gradient-to-tr from-gray-100 to-sky-200/30 hover:to-sky-200/50"
           onClick={() => {
             router.push(`/dashboard/createblinks/${d.id}`);
           }}

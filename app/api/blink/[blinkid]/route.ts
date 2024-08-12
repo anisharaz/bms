@@ -16,7 +16,7 @@ export async function GET(
   request: Request,
   { params }: { params: { tempid: string } }
 ) {
-  const BlinkData = await prisma.createBlink.findFirst({
+  const BlinkData = await prisma.blinks.findFirst({
     where: {
       id: params.tempid,
     },
@@ -37,7 +37,7 @@ export async function POST(
 ) {
   const amount = req.nextUrl.searchParams.get("amount");
   const { account } = await req.json();
-  const Blink = await prisma.createBlink.findFirst({
+  const Blink = await prisma.blinks.findFirst({
     where: {
       id: params.blinkid,
     },

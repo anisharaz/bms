@@ -9,10 +9,10 @@ async function CreateBlinkPage() {
       email: user?.user?.email,
     },
     include: {
-      CreateBlink: true,
+      Blinks: true,
     },
   });
-  user_db?.CreateBlink.sort((a, b) => {
+  user_db?.Blinks.sort((a, b) => {
     if (a.doneCreating === b.doneCreating) {
       return 0;
     }
@@ -33,7 +33,7 @@ async function CreateBlinkPage() {
         }}
         className="flex flex-col gap-2"
       >
-        {user_db?.CreateBlink.map((d, index) => {
+        {user_db?.Blinks.map((d, index) => {
           return (
             <BlinkList
               key={d.id}

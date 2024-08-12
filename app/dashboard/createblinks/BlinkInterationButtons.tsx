@@ -25,7 +25,7 @@ export function DeleteButton({ id }: { id: string }) {
   ) : (
     <HoverCard>
       <HoverCardTrigger
-        className="flex items-center gap-1 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-3"
+        className="flex items-center gap-1 bg-red-700 hover:bg-red-800 text-primary-foreground rounded-lg px-3"
         onClick={async (e) => {
           e.stopPropagation();
           setLoading(true);

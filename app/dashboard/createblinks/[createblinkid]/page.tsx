@@ -8,7 +8,7 @@ async function CreateBlinkForm({
 }: {
   params: { createblinkid: string };
 }) {
-  const blinkData = await prisma.createBlink.findFirst({
+  const blinkData = await prisma.blinks.findFirst({
     where: {
       id: params.createblinkid,
     },

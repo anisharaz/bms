@@ -20,7 +20,7 @@ export async function createblink({
     },
   });
   try {
-    await prisma.createBlink.create({
+    await prisma.blinks.create({
       data: {
         id: id,
         userId: user?.id as string,
@@ -52,7 +52,7 @@ export async function addBlinkData({
   walletaddress: string;
 }) {
   try {
-    const update = await prisma.createBlink.update({
+    const update = await prisma.blinks.update({
       where: {
         id: blinkid,
       },
@@ -78,7 +78,7 @@ export async function addBlinkData({
 }
 
 export async function DeleteBlink({ id }: { id: string }) {
-  const deletedBlink = await prisma.createBlink.delete({
+  const deletedBlink = await prisma.blinks.delete({
     where: {
       id: id,
     },
@@ -95,7 +95,7 @@ export async function ToggleProductionReady({
   production: boolean;
 }) {
   try {
-    const getBlink = await prisma.createBlink.findFirst({
+    const getBlink = await prisma.blinks.findFirst({
       where: {
         id: id,
       },
@@ -106,7 +106,7 @@ export async function ToggleProductionReady({
         message: "Blink is not ready",
       };
     }
-    const updatedBlink = await prisma.createBlink.update({
+    const updatedBlink = await prisma.blinks.update({
       where: {
         id: id,
       },

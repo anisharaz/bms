@@ -1,7 +1,5 @@
-import AppBar from "../AppComponents/AppBar";
-
 function HomePage() {
-  return <div>{/* <AppBar /> */}</div>;
+  return <div></div>;
 }
 
 export default HomePage;

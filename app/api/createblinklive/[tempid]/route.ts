@@ -4,7 +4,7 @@ export async function GET(
   request: Request,
   { params }: { params: { tempid: string } }
 ) {
-  const BlinkData = await prisma.createBlink.findFirst({
+  const BlinkData = await prisma.blinks.findFirst({
     where: {
       id: params.tempid,
     },

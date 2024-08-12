@@ -7,7 +7,7 @@ export async function generateMetadata({
 }: {
   params: { blinkid: string };
 }): Promise<Metadata> {
-  const blink = await prisma.createBlink.findUnique({
+  const blink = await prisma.blinks.findUnique({
     where: {
       id: params.blinkid,
     },
@@ -29,7 +29,7 @@ export async function generateMetadata({
 }
 
 async function ViewBlink({ params }: { params: { blinkid: string } }) {
-  const blink = await prisma.createBlink.findUnique({
+  const blink = await prisma.blinks.findUnique({
     where: {
       id: params.blinkid,
     },
