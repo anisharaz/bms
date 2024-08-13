@@ -13,13 +13,12 @@ async function AccountPage() {
       Blinks: true,
     },
   });
-  const premium = user_db?.premium;
   return (
     <div className="mx-6 my-4 flex flex-col gap-4">
       <div>
         <div className="flex justify-between items-center p-4">
           <div>
-            {premium ? (
+            {user_db?.premium ? (
               <div className="text-xl font-bold">Welcome Back !!</div>
             ) : (
               <Button className="text-black bg-gradient-to-tr from-amber-200 to-amber-500 hover:shadow-md hover:shadow-amber-500">
@@ -37,7 +36,7 @@ async function AccountPage() {
           Blinks: <span>{user_db?.Blinks.length}</span>
         </div>
         <div>
-          Production Blinks:{" "}
+          Blinks in Production:{" "}
           <span>
             {(function () {
               let production_blink_count = 0;
