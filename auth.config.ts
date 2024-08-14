@@ -27,6 +27,6 @@ export default {
     // },
   },
   theme: {
-    logo: "https://authjs.dev/img/logo-sm.png",
+    logo: "https://static.aaraz.me/bms_logo.png",
   },
 } satisfies NextAuthConfig;

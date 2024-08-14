@@ -7,7 +7,7 @@ function LoginButton() {
   return (
     <Button
       onClick={() => {
-        signIn();
+        signIn(undefined, { callbackUrl: "/dashboard/account" });
       }}
       variant={"outline"}
       className="text-lg"
