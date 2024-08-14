@@ -17,10 +17,9 @@ async function AppBar() {
       <div className="px-6">
         <div>
           {user ? (
-            <Link href={"/dashboard"}>
-              <Button variant={"outline"} className="text-lg">
-                Dashboard
-                <LayoutDashboardIcon />{" "}
+            <Link href={"/dashboard/account"}>
+              <Button variant={"outline"} className="text-lg flex gap-1">
+                <span> Dashboard</span> <LayoutDashboardIcon color="grey" />
               </Button>
             </Link>
           ) : (

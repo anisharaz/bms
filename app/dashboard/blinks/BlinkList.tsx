@@ -24,12 +24,12 @@ export default function BlinkList({
         <div
           className="flex-1 p-3  cursor-pointer rounded-sm bg-gradient-to-tr from-gray-100 to-sky-200/30 hover:to-sky-200/50"
           onClick={() => {
-            router.push(`/dashboard/createblinks/${d.id}`);
+            router.push(`/dashboard/blinks/${d.id}`);
           }}
         >
           <div className="flex justify-between">
             <div className="flex items-center gap-2">
-              <div className="text-lg flex-1 bg-sky-500 text-white rounded-full h-8 w-8 text-center">
+              <div className="text-lg flex-1 bg-neutral-200 text-black rounded-full h-8 w-8 text-center">
                 {index + 1 + ". "}
               </div>
             </div>
@@ -42,13 +42,18 @@ export default function BlinkList({
           <div className="flex flex-col mt-3 gap-2 pl-6">
             <div className="text-lg">
               <div className="text-xl">
-                <span>Name:</span>
+                <span className="font-bold">Name:</span>
                 {" " + d.BlinkName}
               </div>
               <div>
-                Wallet Addr. : <span>12121</span>
+                <span className="font-bold">Wallet Addr: </span>
+                <span>12121</span>
               </div>
               {children}
+              <div>
+                <span className="font-bold">ID: </span>
+                <span>{d.id.slice(0, 4)}</span>
+              </div>
             </div>
 
             <div>

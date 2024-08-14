@@ -1,4 +1,4 @@
-import ActionRenderer from "@/app/dashboard/createblinks/[createblinkid]/ActionRenderer";
+import ActionRenderer from "@/components/ui/ActionRenderer";
 import prisma from "@/lib/db";
 import { Metadata } from "next";
 

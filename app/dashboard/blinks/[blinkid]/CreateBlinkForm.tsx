@@ -121,6 +121,7 @@ function CreateBlinkForm({
         blinkid,
         data: newInstance.data,
         walletaddress: newInstance.walletaddress,
+        blink_name: blinkName,
       });
       if (res.success) {
         alert("Blink updated successfully");

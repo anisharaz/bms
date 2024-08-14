@@ -33,7 +33,7 @@ function CreateBlinkButton() {
               setLoading(false);
               return;
             }
-            router.push(`/dashboard/createblinks/${tempid}`);
+            router.push(`/dashboard/blinks/${tempid}`);
           }}
           size={"lg"}
         >

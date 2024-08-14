@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/db";
-import { SolanaActionsSpecClass } from "../../lib/SolanaActionsSpecClass";
+import { SolanaActionsSpecClass } from "@/lib/SolanaActionsSpecClass";
 import { revalidatePath } from "next/cache";
 
 export async function createblink({
@@ -46,10 +46,12 @@ export async function addBlinkData({
   blinkid,
   data,
   walletaddress,
+  blink_name,
 }: {
   blinkid: string;
   data: any;
   walletaddress: string;
+  blink_name: string;
 }) {
   try {
     const update = await prisma.blinks.update({
@@ -57,14 +59,15 @@ export async function addBlinkData({
         id: blinkid,
       },
       data: {
+        name: blink_name,
         data: data,
         doneCreating: true,
         walletaddress: walletaddress,
       },
     });
-    revalidatePath("/dashboard/createblinks/[createblinkid]", "page");
+    revalidatePath("/dashboard/blinks/[blinkid]", "page");
     revalidatePath("/api/createblinklive/");
-    revalidatePath(`/dashboard/createblinks/`);
+    revalidatePath(`/dashboard/blinks/`);
     return {
       success: true,
       message: "",
@@ -83,7 +86,7 @@ export async function DeleteBlink({ id }: { id: string }) {
       id: id,
     },
   });
-  revalidatePath(`/dashboard/createblinks/`);
+  revalidatePath(`/dashboard/blinks/`);
   return deletedBlink;
 }
 
@@ -116,7 +119,7 @@ export async function ToggleProductionReady({
     });
     // add 500ms delay to simulate server response
     await new Promise((resolve) => setTimeout(resolve, 500));
-    revalidatePath(`/dashboard/createblinks/`);
+    revalidatePath(`/dashboard/blinks/`);
     return {
       success: true,
       message: "",

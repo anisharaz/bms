@@ -112,7 +112,7 @@ export function CopyLink({ id }: { id: string }) {
   return (
     <HoverCard>
       <HoverCardTrigger
-        className="flex items-center gap-1 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-1"
+        className="flex items-center gap-1 hover:bg-sky-200 rounded-lg px-2 mr-3 text-black/80"
         onClick={(e) => {
           e.stopPropagation();
           navigator.clipboard.writeText(
@@ -121,7 +121,7 @@ export function CopyLink({ id }: { id: string }) {
           alert("Link copied to clipboard");
         }}
       >
-        <div>Copy</div>
+        Copy Link
         <ClipboardListIcon />
       </HoverCardTrigger>
       <HoverCardContent className="p-0 px-1 m-0 w-fit rounded-xl">

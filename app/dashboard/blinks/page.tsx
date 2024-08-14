@@ -15,15 +15,7 @@ async function CreateBlinkPage() {
       Blinks: true,
     },
   });
-  user_db?.Blinks.sort((a, b) => {
-    if (a.doneCreating === b.doneCreating) {
-      return 0;
-    }
-    if (a.doneCreating) {
-      return 1;
-    }
-    return -1;
-  });
+  user_db?.Blinks.sort();
   return (
     <div className="flex flex-col gap-3 p-4">
       <div>
@@ -55,7 +47,7 @@ async function CreateBlinkPage() {
                   </div>
                 }
               >
-                <BalanceCard WalletAddress="3pt1fCSbikqpErQ1TAffEkeXxqWdok6D38JTBzY1iq1M" />
+                <BalanceCard WalletAddress={d.walletaddress} />
               </Suspense>
             </BlinkList>
           );

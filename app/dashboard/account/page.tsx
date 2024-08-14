@@ -32,11 +32,17 @@ async function AccountPage() {
         </div>
       </div>
       <div className="border-gray-400 border rounded-lg p-4 text-xl">
+        {/* <div className=""> */}
         <div>
-          Blinks: <span>{user_db?.Blinks.length}</span>
+          <span className="font-bold"> Email: </span>
+          <span>{user_session?.user?.email}</span>
         </div>
         <div>
-          Blinks in Production:{" "}
+          <span className="font-bold">Blinks: </span>
+          <span>{user_db?.Blinks.length}</span>
+        </div>
+        <div>
+          <span className="font-bold">Blinks in Production: </span>
           <span>
             {(function () {
               let production_blink_count = 0;
@@ -49,6 +55,7 @@ async function AccountPage() {
             })()}
           </span>
         </div>
+        {/* </div> */}
       </div>
     </div>
   );

@@ -1,30 +1,26 @@
 import prisma from "@/lib/db";
-import ActionRenderer from "./ActionRenderer";
+import ActionRenderer from "@/components/ui/ActionRenderer";
 import CreateForm from "./CreateBlinkForm";
 import "./createblink.css";
 import { GetPreSignedUrl } from "@/lib/AWS";
-async function CreateBlinkForm({
-  params,
-}: {
-  params: { createblinkid: string };
-}) {
+async function CreateBlinkForm({ params }: { params: { blinkid: string } }) {
   const blinkData = await prisma.blinks.findFirst({
     where: {
-      id: params.createblinkid,
+      id: params.blinkid,
     },
   });
   const { url, fields } = await GetPreSignedUrl({
-    blinkid: params.createblinkid,
+    blinkid: params.blinkid,
   });
 
   const blink_url = blinkData?.productionready
-    ? `${process.env.NEXTAUTH_URL}/api/blink/${params.createblinkid}`
-    : `${process.env.NEXTAUTH_URL}/api/createblinklive/${params.createblinkid}`;
+    ? `${process.env.NEXTAUTH_URL}/api/blink/${params.blinkid}`
+    : `${process.env.NEXTAUTH_URL}/api/createblinklive/${params.blinkid}`;
   return (
     <div className="main">
       <div className="main-child-1 p-2">
         <CreateForm
-          blinkid={params.createblinkid}
+          blinkid={params.blinkid}
           presignedurl={url}
           fields={fields}
         />
