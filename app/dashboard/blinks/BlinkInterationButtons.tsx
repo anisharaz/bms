@@ -6,7 +6,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-
+import { Bounce, toast } from "react-toastify";
 import {
   ClipboardListIcon,
   Loader2,
@@ -34,6 +34,17 @@ export function DeleteButton({ id }: { id: string }) {
           );
           if (make_sure) {
             await DeleteBlink({ id: id });
+            toast.info("Blink Deleted", {
+              position: "bottom-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              transition: Bounce,
+            });
           }
           setLoading(false);
         }}
@@ -74,6 +85,17 @@ export function ToggleActive({
             alert(res.message);
           }
           setLoading(false);
+          toast.warn("Production OFF", {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
         }}
       >
         <ToggleRightIcon />
@@ -97,6 +119,17 @@ export function ToggleActive({
             alert(res.message);
           }
           setLoading(false);
+          toast.success("Production ON", {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
         }}
       >
         <ToggleLeftIcon />
@@ -118,7 +151,17 @@ export function CopyLink({ id }: { id: string }) {
           navigator.clipboard.writeText(
             `${window.location.origin}/viewblink/${id}`
           );
-          alert("Link copied to clipboard");
+          toast.success("Link Copied !!", {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
         }}
       >
         Copy Link

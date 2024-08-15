@@ -33,7 +33,7 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-5 pt-20">
+        <div className="flex flex-col gap-5 pt-12">
           <NavOptions />
         </div>
       </div>

@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import BlinkList from "./BlinkList";
 import { Suspense } from "react";
 import BalanceCard from "./BalanceCard";
+import { ToastContainer, Bounce } from "react-toastify";
 
 async function CreateBlinkPage() {
   const user = await auth();
@@ -52,6 +53,19 @@ async function CreateBlinkPage() {
             </BlinkList>
           );
         })}
+        <ToastContainer
+          position="bottom-right"
+          autoClose={500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
       </div>
     </div>
   );
