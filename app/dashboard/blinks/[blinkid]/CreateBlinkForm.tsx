@@ -155,7 +155,7 @@ function CreateBlinkForm({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="sticky top-0 bg-white">
+      <div className="sticky top-0 bg-white pb-4">
         <div className="text-2xl font-bold underline underline-offset-4">
           Mocked Preview
         </div>
