@@ -7,7 +7,7 @@ import { addBlinkData } from "@/app/action/database";
 import { CircleXIcon, Loader2 } from "lucide-react";
 import { BlinkDataType } from "@/lib/types";
 import { blinkButtonElement, blinkInputElement } from "@/lib/types";
-
+// TODO: add sol amount verification
 function CreateBlinkForm({
   blinkid,
   presignedurl,

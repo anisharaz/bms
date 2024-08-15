@@ -72,9 +72,8 @@ export async function addBlinkData({
         walletaddress: walletaddress,
       },
     });
-    revalidatePath("/dashboard/blinks/[blinkid]", "page");
-    revalidatePath("/api/createblinklive/");
-    revalidatePath(`/dashboard/blinks/`);
+    revalidatePath("/dashboard");
+    revalidatePath("/api");
     return {
       success: true,
       message: "",
@@ -93,7 +92,7 @@ export async function DeleteBlink({ id }: { id: string }) {
       id: id,
     },
   });
-  revalidatePath(`/dashboard/blinks/`);
+  revalidatePath(`/dashboard`);
   return deletedBlink;
 }
 
@@ -126,7 +125,7 @@ export async function ToggleProductionReady({
     });
     // add 500ms delay to simulate server response
     await new Promise((resolve) => setTimeout(resolve, 500));
-    revalidatePath(`/dashboard/blinks/`);
+    revalidatePath(`/dashboard`);
     return {
       success: true,
       message: "",
