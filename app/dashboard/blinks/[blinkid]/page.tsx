@@ -21,8 +21,12 @@ async function CreateBlinkForm({ params }: { params: { blinkid: string } }) {
       <div className="main-child-1 p-2">
         <CreateForm
           blinkid={params.blinkid}
+          BlinkName={blinkData?.name as string}
           presignedurl={url}
           fields={fields}
+          // @ts-ignore
+          BlinkData={blinkData?.data}
+          BlinkWalletAddr={blinkData?.walletaddress as string}
         />
       </div>
       <div className="main-child-2 sticky top-0 ">

@@ -5,19 +5,8 @@ export class SolanaActionsSpecClass {
   public walletaddress: string = "";
   public Actions: LinkedAction[] = [
     {
-      href: "placeholder",
-      label: "Button 1",
-    },
-    {
-      href: "placeholder",
-      label: "Button 2",
-      parameters: [
-        {
-          name: "amount", // parameter name in the `href` above
-          label: "label for input", // placeholder of the text input
-          required: true,
-        },
-      ],
+      href: "templac_holder",
+      label: "0.1 SOL",
     },
   ];
   public data: ActionGetResponse = {

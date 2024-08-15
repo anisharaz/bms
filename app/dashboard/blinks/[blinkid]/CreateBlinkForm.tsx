@@ -4,63 +4,81 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { LinkedAction } from "@solana/actions";
 import { addBlinkData } from "@/app/action/database";
-import WalletButton from "@/app/AppComponents/WalletButton";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { Loader2 } from "lucide-react";
-
-type blinkButtonElement = {
-  id: string;
-  button_label: string;
-  button_value: string;
-};
-type blinkInputElement = {
-  input_label: string;
-  input_button_value: string;
-};
+import { CircleXIcon, Loader2 } from "lucide-react";
+import { BlinkDataType } from "@/lib/types";
+import { blinkButtonElement, blinkInputElement } from "@/lib/types";
 
 function CreateBlinkForm({
   blinkid,
   presignedurl,
   fields,
+  BlinkData,
+  BlinkName,
+  BlinkWalletAddr,
 }: {
   blinkid: string;
   presignedurl: string;
   fields: Record<string, string>;
+  BlinkData: BlinkDataType;
+  BlinkName: string;
+  BlinkWalletAddr: string;
 }) {
-  const wallet = useWallet();
-  const [blinkName, setBlinkName] = useState("");
+  const [blinkName, setBlinkName] = useState(BlinkName);
   const [file, setFile] = useState<File | null>(null);
   const fileChange = (e: any) => {
     setFile(e.target.files[0]);
   };
-  const [walletAddress, setWalletAddress] = useState("");
+  const [walletAddress, setWalletAddress] = useState(BlinkWalletAddr);
   const [loading, setLoading] = useState(false);
   const [mainHeading, setMainHeading] = useState({
-    title: "Title",
-    description: "Description",
+    title: BlinkData.title || "Title",
+    description: BlinkData.description || "Description",
+  });
+
+  const filterBlinkButtons = BlinkData.links?.actions.filter(
+    (e) => e.parameters == undefined
+  );
+
+  const DataForBlinkButtonElement = filterBlinkButtons?.map((e) => {
+    let hrefUrl = null;
+    try {
+      hrefUrl = new URL(e.href);
+    } catch (error) {}
+    return {
+      id: Math.random().toString(),
+      button_label: e.label,
+      button_value: hrefUrl?.searchParams.get("amount") || "NaN",
+    };
   });
   const [blinkButtonElement, setblinkButtonElement] = useState<
     blinkButtonElement[]
-  >([]);
+  >(DataForBlinkButtonElement || []);
   const [addButtonElement, setAddButtonElement] = useState({
     button_label: "",
     button_value: "",
   });
-  const [blinkInputElement, setblinkInputElement] =
-    useState<blinkInputElement | null>(null);
 
+  const filterBlinkInput = BlinkData.links?.actions.filter(
+    (e) => e.parameters != undefined
+  );
+  const [blinkInputElement, setblinkInputElement] =
+    useState<blinkInputElement | null>(() => {
+      if (filterBlinkInput?.length == 0) {
+        return null;
+      }
+      return {
+        input_button_value: filterBlinkInput![0].label,
+        input_label: filterBlinkInput![0].parameters![0].label as string,
+      };
+    });
   const [addInputElement, setAddInputElement] = useState({
-    input_label: "",
     input_button_value: "",
+    input_label: "",
   });
 
   async function handleSubmit() {
-    if (walletAddress == "" && !wallet.connected) {
-      alert("Please enter wallet address or connect wallet");
-      return;
-    }
-    if (file == null) {
-      alert("Please select an image file");
+    if (walletAddress == "") {
+      alert("Please enter wallet address");
       return;
     }
     setLoading(true);
@@ -72,9 +90,7 @@ function CreateBlinkForm({
     newInstance.data.title = mainHeading.title;
     newInstance.data.description = mainHeading.description;
     newInstance.data.label = "";
-    newInstance.walletaddress = wallet.connected
-      ? (wallet.publicKey?.toBase58() as string)
-      : walletAddress;
+    newInstance.walletaddress = walletAddress;
     const actionData: LinkedAction[] = blinkButtonElement.map((e) => {
       return {
         href: `${hostname}/api/blink/${blinkid}/?amount=${e.button_value}`,
@@ -97,37 +113,41 @@ function CreateBlinkForm({
     if (newInstance.data.links?.actions != undefined) {
       newInstance.data.links.actions = actionData;
     }
-    const formData = new FormData();
-    Object.entries(fields).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    formData.append("file", file as File);
-    const response = await fetch(presignedurl, {
-      method: "POST",
-      body: formData,
-    });
-    if (!response.ok) {
-      alert("Image Upload Failed! Try Again");
-    } else {
-      const data = await response.text();
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(data, "text/xml");
-      const imageLocation =
-        xmlDoc.getElementsByTagName("Location")[0]?.childNodes[0]?.nodeValue;
-      let IMGURL = new URL(imageLocation as string);
-      IMGURL.hostname = "dalrhzyq3imlu.cloudfront.net";
-      newInstance.data.icon = IMGURL.toString();
-      const res = await addBlinkData({
-        blinkid,
-        data: newInstance.data,
-        walletaddress: newInstance.walletaddress,
-        blink_name: blinkName,
+    if (file != null) {
+      const formData = new FormData();
+      Object.entries(fields).forEach(([key, value]) => {
+        formData.append(key, value);
       });
-      if (res.success) {
-        alert("Blink updated successfully");
+      formData.append("file", file as File);
+      const response = await fetch(presignedurl, {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        alert("Image Upload Failed! Try Again");
       } else {
-        alert("Error occured try again");
+        const data = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(data, "text/xml");
+        const imageLocation =
+          xmlDoc.getElementsByTagName("Location")[0]?.childNodes[0]?.nodeValue;
+        let IMGURL = new URL(imageLocation as string);
+        IMGURL.hostname = "dalrhzyq3imlu.cloudfront.net";
+        newInstance.data.icon = IMGURL.toString();
       }
+    } else {
+      newInstance.data.icon = BlinkData.icon;
+    }
+    const res = await addBlinkData({
+      blinkid,
+      data: newInstance.data,
+      walletaddress: newInstance.walletaddress,
+      blink_name: blinkName,
+    });
+    if (res.success) {
+      alert("Blink updated successfully");
+    } else {
+      alert("Error occured try again");
     }
     setLoading(false);
     if (window) {
@@ -137,7 +157,7 @@ function CreateBlinkForm({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="">
+      <div className="sticky top-0 bg-white">
         <div className="text-2xl font-bold underline underline-offset-4">
           Mocked Preview
         </div>
@@ -154,7 +174,7 @@ function CreateBlinkForm({
               return (
                 <Button
                   key={e.id}
-                  className="bg-sky-500 hover:bg-sky-600 rounded-full w-full text-white text-2xl"
+                  className="bg-sky-500 hover:bg-sky-600 h-10 rounded-full w-full text-white text-xl font-bold"
                 >
                   {e.button_label}
                 </Button>
@@ -165,11 +185,11 @@ function CreateBlinkForm({
             <div className="flex rounded-full p-2 m-1 bg-[#202327] border border-gray-600 w-full h-16 items-center">
               <input
                 type="text"
-                className="w-full bg-transparent "
+                className="w-full bg-transparent focus:border-red-300"
                 placeholder={blinkInputElement.input_label}
                 disabled
               />
-              <Button className="bg-sky-500 rounded-full p-6 text-white text-2xl hover:bg-sky-600">
+              <Button className="bg-gray-700/50 rounded-full p-6 text-gray-500 font-bold text-2xl hover:bg-sky-500 hover:text-white">
                 {blinkInputElement.input_button_value}
               </Button>
             </div>
@@ -178,10 +198,31 @@ function CreateBlinkForm({
       </div>
       <form action="" className="flex flex-col gap-4">
         <div>
-          <div className="text-2xl underline underline-offset-4 mb-2">
+          <div className="text-2xl underline underline-offset-4 ">
             Button Element
           </div>
-
+          <div className="flex p-2 gap-2">
+            {blinkButtonElement.map((e) => {
+              return (
+                <div
+                  key={e.id}
+                  className="flex gap-1 items-center bg-sky-300 rounded-md p-[3px]"
+                >
+                  <div>{e.button_label}</div>
+                  <button
+                    className="bg-red-400 rounded-full"
+                    onClick={() => {
+                      setblinkButtonElement(
+                        blinkButtonElement.filter((el) => e.id != el.id)
+                      );
+                    }}
+                  >
+                    <CircleXIcon />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
           <div className="flex gap-2 mb-2">
             <div className="w-full md:w-1/2 ">
               <input
@@ -243,8 +284,19 @@ function CreateBlinkForm({
           </Button>
         </div>
         <div>
-          <div className="text-2xl underline underline-offset-4 mb-2">
+          <div className="text-2xl underline underline-offset-4 ">
             Input Area
+          </div>
+          <div className="flex gap-2 items-center py-2">
+            <button
+              className="bg-red-400  hover:bg-red-500 rounded-md p-2"
+              onClick={(e) => {
+                e.preventDefault();
+                setblinkInputElement(null);
+              }}
+            >
+              Remove Input Element
+            </button>
           </div>
           <div className="flex gap-2 mb-2">
             <div className="w-full md:w-1/2 ">
@@ -259,7 +311,6 @@ function CreateBlinkForm({
                     input_label: e.target.value,
                   })
                 }
-                value={addInputElement.input_label}
               />
             </div>
             <div className="w-full md:w-1/2 ">
@@ -274,7 +325,6 @@ function CreateBlinkForm({
                     input_button_value: e.target.value,
                   })
                 }
-                value={addInputElement.input_button_value}
               />
             </div>
           </div>
@@ -293,14 +343,9 @@ function CreateBlinkForm({
                 input_label: addInputElement.input_label,
                 input_button_value: addInputElement.input_button_value,
               });
-              setAddInputElement({
-                input_label: "",
-                input_button_value: "",
-              });
             }}
-            disabled={blinkInputElement == null ? false : true}
           >
-            Add Input
+            Update Input
           </Button>
         </div>
         <div>
@@ -312,7 +357,8 @@ function CreateBlinkForm({
             id="grid-first-name"
             type="text"
             placeholder="Name of Blink"
-            onChange={(e) => setBlinkName(e.target.value || "Blink Name")}
+            onChange={(e) => setBlinkName(e.target.value)}
+            value={blinkName}
           />
         </div>
         <div>
@@ -329,9 +375,10 @@ function CreateBlinkForm({
                 onChange={(e) =>
                   setMainHeading({
                     ...mainHeading,
-                    title: e.target.value || "Title",
+                    title: e.target.value,
                   })
                 }
+                value={mainHeading.title}
               />
             </div>
             <div className="w-full md:w-1/2 ">
@@ -343,9 +390,10 @@ function CreateBlinkForm({
                 onChange={(e) =>
                   setMainHeading({
                     ...mainHeading,
-                    description: e.target.value || "Description",
+                    description: e.target.value,
                   })
                 }
+                value={mainHeading.description}
               />
             </div>
           </div>
@@ -357,18 +405,14 @@ function CreateBlinkForm({
           <div className="flex items-center gap-2">
             <div className="w-full md:w-1/2">
               <input
-                className={`appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${
-                  wallet.connected && "opacity-50"
-                }`}
+                className={`appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white `}
                 id="grid-first-name"
                 type="text"
                 placeholder="Wallet Address"
                 onChange={(e) => setWalletAddress(e.target.value)}
-                disabled={wallet.connected}
+                value={walletAddress}
               />
             </div>
-            <div>or</div>
-            <WalletButton />
           </div>
         </div>
         <div>

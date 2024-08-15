@@ -29,13 +29,14 @@ function CreateBlinkButton() {
               id: tempid,
             });
             if (res.success === false) {
-              alert("Something went try again");
+              alert(res.message);
               setLoading(false);
               return;
             }
             router.push(`/dashboard/blinks/${tempid}`);
           }}
           size={"lg"}
+          className="text-lg"
         >
           New Blink
         </Button>

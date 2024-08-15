@@ -13,12 +13,20 @@ export async function createblink({
 }) {
   const newInstance = new SolanaActionsSpecClass();
   newInstance.instanceID = id;
-
   const user = await prisma.user.findFirst({
     where: {
       email: email,
     },
+    include: {
+      Blinks: true,
+    },
   });
+  if ((user?.Blinks.length as number) >= 3) {
+    return {
+      success: false,
+      message: "You have reached the limit of 3 blinks for free user",
+    };
+  }
   try {
     await prisma.blinks.create({
       data: {
@@ -36,12 +44,11 @@ export async function createblink({
   } catch (error) {
     return {
       success: false,
-      message: error,
+      message: "Some Thing Went Wrong try again later",
     };
   }
 }
 
-// TODO: add feature to partially update data
 export async function addBlinkData({
   blinkid,
   data,
