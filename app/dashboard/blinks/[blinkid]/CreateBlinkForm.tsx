@@ -7,7 +7,6 @@ import { addBlinkData } from "@/app/action/database";
 import { CircleXIcon, Loader2 } from "lucide-react";
 import { BlinkDataType } from "@/lib/types";
 import { blinkButtonElement, blinkInputElement } from "@/lib/types";
-// TODO: add sol amount verification
 function CreateBlinkForm({
   blinkid,
   presignedurl,
@@ -25,44 +24,43 @@ function CreateBlinkForm({
 }) {
   const [blinkName, setBlinkName] = useState(BlinkName);
   const [file, setFile] = useState<File | null>(null);
-  const fileChange = (e: any) => {
-    setFile(e.target.files[0]);
-  };
   const [walletAddress, setWalletAddress] = useState(BlinkWalletAddr);
   const [loading, setLoading] = useState(false);
   const [mainHeading, setMainHeading] = useState({
     title: BlinkData.title || "Title",
     description: BlinkData.description || "Description",
   });
-
-  const filterBlinkButtons = BlinkData.links?.actions.filter(
-    (e) => e.parameters == undefined
-  );
-
-  const DataForBlinkButtonElement = filterBlinkButtons?.map((e) => {
-    let hrefUrl = null;
-    try {
-      hrefUrl = new URL(e.href);
-    } catch (error) {}
-    return {
-      id: Math.random().toString(),
-      button_label: e.label,
-      button_value: hrefUrl?.searchParams.get("amount") || "NaN",
-    };
-  });
   const [blinkButtonElement, setblinkButtonElement] = useState<
     blinkButtonElement[]
-  >(DataForBlinkButtonElement || []);
+  >(() => {
+    const filterBlinkButtons = BlinkData.links?.actions.filter(
+      (e) => e.parameters == undefined
+    );
+    const DataForBlinkButtonElement = filterBlinkButtons?.map((e) => {
+      let hrefUrl = null;
+      try {
+        hrefUrl = new URL(e.href);
+      } catch (error) {}
+      return {
+        id: Math.random().toString(),
+        button_label: e.label,
+        button_value: hrefUrl?.searchParams.get("amount") || "NaN",
+      };
+    });
+    if (DataForBlinkButtonElement) {
+      return DataForBlinkButtonElement;
+    }
+    return [];
+  });
   const [addButtonElement, setAddButtonElement] = useState({
     button_label: "",
     button_value: "",
   });
-
-  const filterBlinkInput = BlinkData.links?.actions.filter(
-    (e) => e.parameters != undefined
-  );
   const [blinkInputElement, setblinkInputElement] =
     useState<blinkInputElement | null>(() => {
+      const filterBlinkInput = BlinkData.links?.actions.filter(
+        (e) => e.parameters != undefined
+      );
       if (filterBlinkInput?.length == 0) {
         return null;
       }
@@ -266,6 +264,10 @@ function CreateBlinkForm({
                 alert("Please fill the input fields");
                 return;
               }
+              if (isNaN(Number(addButtonElement.button_value))) {
+                alert("Please enter a valid number");
+                return;
+              }
               setblinkButtonElement([
                 ...blinkButtonElement,
                 {
@@ -426,7 +428,12 @@ function CreateBlinkForm({
             <input
               type="file"
               id="image"
-              onChange={fileChange}
+              onChange={(e) => {
+                const files = e.target.files;
+                if (files && files.length > 0) {
+                  setFile(files[0]);
+                }
+              }}
               accept=".jpg"
               className="block w-full mt-5 text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />

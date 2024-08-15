@@ -37,6 +37,8 @@ export async function createblink({
         name: "Edit Blink Name",
       },
     });
+    revalidatePath("/dashboard");
+    revalidatePath("/api");
     return {
       success: true,
       message: "",
