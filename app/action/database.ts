@@ -39,6 +39,7 @@ export async function createblink({
     });
     revalidatePath("/dashboard");
     revalidatePath("/api");
+    revalidatePath("/viewblink");
     return {
       success: true,
       message: "",
@@ -76,6 +77,7 @@ export async function addBlinkData({
     });
     revalidatePath("/dashboard");
     revalidatePath("/api");
+    revalidatePath("/viewblink");
     return {
       success: true,
       message: "",
