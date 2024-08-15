@@ -18,13 +18,13 @@ async function AccountPage() {
       <div>
         <div className="flex justify-between items-center p-4">
           <div>
-            {user_db?.premium ? (
+            {/* {user_db?.premium ? (
               <div className="text-xl font-bold">Welcome Back !!</div>
             ) : (
               <Button className="text-black bg-gradient-to-tr from-amber-200 to-amber-500 hover:shadow-md hover:shadow-amber-500">
                 Get Premium
               </Button>
-            )}
+            )} */}
           </div>
           <div>
             <LogoutButton />

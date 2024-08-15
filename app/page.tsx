@@ -1,4 +1,4 @@
-import HomePage from "./HomePage/main";
+import HomePage from "./HomePage/HomePage";
 
 function Root() {
   return (
