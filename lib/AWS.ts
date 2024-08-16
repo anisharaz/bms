@@ -1,4 +1,4 @@
-import { S3Client } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 export const s3Client = new S3Client({
   region: "us-east-1",
@@ -23,4 +23,17 @@ export async function GetPreSignedUrl({ blinkid }: { blinkid: string }) {
     Expires: 3600,
   });
   return { url, fields, key };
+}
+
+export async function Deletes3image({ key }: { key: string }) {
+  try {
+    await s3Client.send(
+      new DeleteObjectCommand({
+        Bucket: "aaraz-main",
+        Key: key,
+      })
+    );
+  } catch (error) {
+    console.log(error);
+  }
 }

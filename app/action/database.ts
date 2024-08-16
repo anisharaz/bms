@@ -1,5 +1,6 @@
 "use server";
 
+import { Deletes3image } from "@/lib/AWS";
 import prisma from "@/lib/db";
 import { SolanaActionsSpecClass } from "@/lib/SolanaActionsSpecClass";
 import { revalidatePath } from "next/cache";
@@ -90,12 +91,14 @@ export async function addBlinkData({
   }
 }
 
+// TODO: add error handling
 export async function DeleteBlink({ id }: { id: string }) {
   const deletedBlink = await prisma.blinks.delete({
     where: {
       id: id,
     },
   });
+  await Deletes3image({ key: `bms/${deletedBlink.id}.jpg` });
   revalidatePath(`/dashboard`);
   return deletedBlink;
 }
