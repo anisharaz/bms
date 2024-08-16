@@ -14,11 +14,11 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 export async function GET(
   request: Request,
-  { params }: { params: { tempid: string } }
+  { params }: { params: { blinkid: string } }
 ) {
   const BlinkData = await prisma.blinks.findFirst({
     where: {
-      id: params.tempid,
+      id: params.blinkid,
     },
   });
   if (BlinkData?.productionready == true && BlinkData.doneCreating == true) {
