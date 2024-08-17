@@ -154,25 +154,32 @@ function CreateBlinkForm({
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="sticky top-0 bg-white pb-4">
-        <div className="text-2xl font-bold underline underline-offset-4">
-          Mocked Preview
+    <div className="flex flex-col lg:gap-4 gap-2">
+      <div className="sticky top-0 backdrop-blur-sm bg-white/50 pb-4">
+        <div className="bg-white">
+          <div className="lg:text-2xl font-bold underline underline-offset-4">
+            Mocked Preview
+          </div>
+          <div className="text-sm bg-amber-200 mt-1 rounded-md p-[2px] lg:hidden">
+            Open In Desktop For Better View
+          </div>
+          <div className="my-2 text-xs lg:text-base">
+            NOTE: Edit & Click add button to reflect change here
+          </div>
         </div>
-        <div className="mt-2">
-          NOTE: Edit & Click add button to reflect change here
-        </div>
-        <div className="border bg-[#202327] rounded-2xl border-sky-400 shadow-sky-400 shadow p-3 flex flex-col gap-3">
+        <div className="border bg-[#202327] rounded-2xl border-sky-400 shadow-sky-400 shadow lg:p-3 p-1 flex flex-col gap-3">
           <div className="">
-            <div className="text-white text-lg">{mainHeading.title}</div>
-            <div className="text-gray-400">{mainHeading.description}</div>
+            <div className="text-white lg:text-lg">{mainHeading.title}</div>
+            <div className="text-gray-400 text-xs lg:text-base">
+              {mainHeading.description}
+            </div>
           </div>
           <div className="flex justify-around gap-3">
             {blinkButtonElement?.map((e) => {
               return (
                 <Button
                   key={e.id}
-                  className="bg-sky-500 hover:bg-sky-600 h-10 rounded-full w-full text-white text-xl font-bold"
+                  className="bg-sky-500 hover:bg-sky-600 lg:h-10 h-7 rounded-full w-full text-white lg:text-xl font-bold"
                 >
                   {e.button_label}
                 </Button>
@@ -180,23 +187,23 @@ function CreateBlinkForm({
             })}
           </div>
           {blinkInputElement && (
-            <div className="flex rounded-full p-2 m-1 bg-[#202327] border border-gray-600 w-full h-16 items-center">
+            <div className="flex rounded-full p-2 m-1 bg-[#202327] border border-gray-600 w-full h-12 items-center">
               <input
                 type="text"
                 className="w-full bg-transparent focus:border-red-300"
                 placeholder={blinkInputElement.input_label}
                 disabled
               />
-              <Button className="bg-gray-700/50 rounded-full p-6 text-gray-500 font-bold text-2xl hover:bg-sky-500 hover:text-white">
+              <Button className="bg-gray-700/50 rounded-full p-4 text-gray-500 font-bold text-xl hover:bg-sky-500 hover:text-white">
                 {blinkInputElement.input_button_value}
               </Button>
             </div>
           )}
         </div>
       </div>
-      <form action="" className="flex flex-col gap-4">
+      <form action="" className="flex flex-col lg:gap-4 gap-1">
         <div>
-          <div className="text-2xl underline underline-offset-4 ">
+          <div className="lg:text-2xl underline underline-offset-4 ">
             Button Element
           </div>
           <div className="flex p-2 gap-2">
@@ -221,10 +228,10 @@ function CreateBlinkForm({
               );
             })}
           </div>
-          <div className="flex gap-2 mb-2">
+          <div className="flex lg:gap-2 gap-1 lg:mb-2">
             <div className="w-full md:w-1/2 ">
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded lg:py-3 lg:px-4 px-2 py-1 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
                 placeholder="Button Label"
@@ -238,9 +245,9 @@ function CreateBlinkForm({
               />
             </div>
 
-            <div className="w-full md:w-1/2 ">
+            <div className="w-full md:w-1/2 mb-2 ">
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded lg:py-3 lg:px-4 px-2 py-1 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
                 placeholder="Button Value"
@@ -286,24 +293,14 @@ function CreateBlinkForm({
           </Button>
         </div>
         <div>
-          <div className="text-2xl underline underline-offset-4 ">
+          <div className="lg:text-2xl underline underline-offset-4 ">
             Input Area
           </div>
-          <div className="flex gap-2 items-center py-2">
-            <button
-              className="bg-red-400  hover:bg-red-500 rounded-md p-2"
-              onClick={(e) => {
-                e.preventDefault();
-                setblinkInputElement(null);
-              }}
-            >
-              Remove Input Element
-            </button>
-          </div>
-          <div className="flex gap-2 mb-2">
+
+          <div className="flex gap-2 mb-2 mt-2">
             <div className="w-full md:w-1/2 ">
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded lg:py-3 lg:px-4 px-2 py-1 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
                 placeholder="Input Label"
@@ -317,7 +314,7 @@ function CreateBlinkForm({
             </div>
             <div className="w-full md:w-1/2 ">
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded lg:py-3 lg:px-4 px-2 py-1 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
                 placeholder="Input Button Label"
@@ -331,31 +328,42 @@ function CreateBlinkForm({
             </div>
           </div>
 
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              if (
-                !addInputElement.input_label ||
-                !addInputElement.input_button_value
-              ) {
-                alert("Please fill the input fields");
-                return;
-              }
-              setblinkInputElement({
-                input_label: addInputElement.input_label,
-                input_button_value: addInputElement.input_button_value,
-              });
-            }}
-          >
-            Update Input
-          </Button>
+          <div className="flex gap-2 items-center lg:py-2">
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                if (
+                  !addInputElement.input_label ||
+                  !addInputElement.input_button_value
+                ) {
+                  alert("Please fill the input fields");
+                  return;
+                }
+                setblinkInputElement({
+                  input_label: addInputElement.input_label,
+                  input_button_value: addInputElement.input_button_value,
+                });
+              }}
+            >
+              Update Input
+            </Button>
+            <button
+              className="bg-red-400  hover:bg-red-500 rounded-md p-1"
+              onClick={(e) => {
+                e.preventDefault();
+                setblinkInputElement(null);
+              }}
+            >
+              Remove Input
+            </button>
+          </div>
         </div>
         <div>
-          <div className="text-2xl underline underline-offset-4 mb-2">
+          <div className="lg:text-2xl underline underline-offset-4 mb-2">
             Blink Name
           </div>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded lg:py-3 lg:px-4 px-2 py-1 leading-tight focus:outline-none focus:bg-white"
             id="grid-first-name"
             type="text"
             placeholder="Name of Blink"
@@ -364,13 +372,13 @@ function CreateBlinkForm({
           />
         </div>
         <div>
-          <div className="text-2xl underline underline-offset-4 mb-2">
+          <div className="lg:text-2xl underline underline-offset-4 mb-2">
             Main Heading
           </div>
           <div className="flex gap-2">
             <div className="w-full md:w-1/2 ">
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded lg:py-3 lg:px-4 px-2 py-1 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
                 placeholder="Title for Blink"
@@ -385,7 +393,7 @@ function CreateBlinkForm({
             </div>
             <div className="w-full md:w-1/2 ">
               <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded lg:py-3 lg:px-4 px-2 py-1 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
                 placeholder="Description for Blink"
@@ -401,13 +409,13 @@ function CreateBlinkForm({
           </div>
         </div>
         <div>
-          <div className="text-2xl underline underline-offset-4 mb-2">
+          <div className="lg:text-2xl underline underline-offset-4 mb-2">
             Wallet Address <span className="text-red-500">*</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-full md:w-1/2">
               <input
-                className={`appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white `}
+                className={`appearance-none block w-full bg-gray-200 text-gray-700 border  rounded lg:py-3 lg:px-4 px-2 py-1 leading-tight focus:outline-none focus:bg-white `}
                 id="grid-first-name"
                 type="text"
                 placeholder="Wallet Address"
@@ -418,9 +426,9 @@ function CreateBlinkForm({
           </div>
         </div>
         <div>
-          <div className="text-2xl underline underline-offset-4 mb-2">
+          <div className="lg:text-2xl underline underline-offset-4 lg:mb-2">
             Blink Image{" "}
-            <span className="text-red-500 text-lg">
+            <span className="text-red-500 lg:text-lg">
               * <span>(JPG Only)</span>
             </span>
           </div>
@@ -435,7 +443,7 @@ function CreateBlinkForm({
                 }
               }}
               accept=".jpg"
-              className="block w-full mt-5 text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              className="block w-full lg:mt-5 mt-2 text-sm lg:text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
           </div>
         </div>
@@ -475,7 +483,7 @@ function CreateBlinkForm({
             await handleSubmit();
             setLoading(false);
           }}
-          className="text-xl p-6"
+          className="lg:text-xl lg:p-6"
           disabled={blinkButtonElement.length == 0 && blinkInputElement == null}
         >
           Update & Save

@@ -17,8 +17,8 @@ async function CreateBlinkForm({ params }: { params: { blinkid: string } }) {
     ? `${process.env.NEXTAUTH_URL}/api/blink/${params.blinkid}`
     : `${process.env.NEXTAUTH_URL}/api/createblinklive/${params.blinkid}`;
   return (
-    <div className="main">
-      <div className="main-child-1 p-2">
+    <div className="lg:flex gap-5 justify-around">
+      <div className="main-child-1 p-2 w-full">
         <CreateForm
           blinkid={params.blinkid}
           BlinkName={blinkData?.name as string}
@@ -29,7 +29,7 @@ async function CreateBlinkForm({ params }: { params: { blinkid: string } }) {
           BlinkWalletAddr={blinkData?.walletaddress as string}
         />
       </div>
-      <div className="main-child-2 sticky top-0 ">
+      <div className="main-child-2 sticky top-0 lg:w-3/5 w-full" style={{}}>
         <div className="text-center text-3xl mb-3 underline underline-offset-4">
           Current Blink
         </div>

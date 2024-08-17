@@ -1,11 +1,10 @@
-.main {
+/* .main {
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 1fr;
-}
+} */
 
 .main-child-2 {
     margin: auto;
-    width: 60%;
     margin-top: 0;
 }
