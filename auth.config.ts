@@ -1,5 +1,3 @@
-// this auth
-import GitHub from "next-auth/providers/github";
 import type { NextAuthConfig } from "next-auth";
 import google from "next-auth/providers/google";
 
@@ -19,12 +17,6 @@ export default {
       }
       return true;
     },
-    // jwt: async ({ token, user, account, profile }) => {
-    //   // add user id to the token right after the user logs in
-    //   if (user) {
-    //     token.id = user. as string;
-    //   }
-    // },
   },
   theme: {
     logo: "https://static.aaraz.me/bms_logo.png",

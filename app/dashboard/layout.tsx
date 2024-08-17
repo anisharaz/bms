@@ -3,6 +3,7 @@ import "./dashboard.css";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import NavOptions from "./NavOptions";
 import prisma from "@/lib/db";
+import LogoutButton from "../AppComponents/LogoutButton";
 
 async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const user = await auth();
@@ -13,10 +14,10 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
   });
   const premium = user_db?.premium;
   return (
-    <div className="flex gap-1 p-[5px]">
-      <div className="left-section rounded-lg  min-w-72 overflow-hidden border border-gray-400">
-        <div className="flex gap-4 py-4 items-center justify-around border-b border-gray-400">
-          <div className="flex gap-10">
+    <div className="flex flex-col lg:flex-row lg:gap-1 gap-2 p-[5px]">
+      <div className="lg:left-section rounded-lg lg:min-w-72 overflow-hidden border border-gray-400">
+        <div className="flex lg:py-4 py-1 items-center lg:justify-around justify-between px-2 border-b border-gray-400">
+          <div className="flex gap-6 lg:gap-10 items-center">
             <Avatar className={`h-12 w-12 ${premium && "premium"}`}>
               <AvatarImage src={`${user_db?.image}`} />
             </Avatar>
@@ -32,8 +33,11 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
               </div>
             </div>
           </div>
+          <div className="lg:hidden">
+            <LogoutButton />
+          </div>
         </div>
-        <div className="flex flex-col gap-5 pt-12">
+        <div className="flex flex-col lg:gap-5 gap-2 lg:pt-12">
           <NavOptions />
         </div>
       </div>

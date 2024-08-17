@@ -25,7 +25,7 @@ export function DeleteButton({ id }: { id: string }) {
   ) : (
     <HoverCard>
       <HoverCardTrigger
-        className="flex items-center gap-1 bg-red-700 hover:bg-red-800 text-primary-foreground rounded-lg px-3"
+        className="flex items-center gap-1 bg-red-700 hover:bg-red-800 text-primary-foreground rounded-lg lg:px-3 lg:py-1 px-2 py-1"
         onClick={async (e) => {
           e.stopPropagation();
           setLoading(true);
@@ -49,7 +49,7 @@ export function DeleteButton({ id }: { id: string }) {
           setLoading(false);
         }}
       >
-        <Trash2Icon />
+        <Trash2Icon className="h-5 w-5" />
       </HoverCardTrigger>
       <HoverCardContent className="p-0 px-1 m-0 w-fit rounded-xl">
         Delete Item
@@ -73,7 +73,7 @@ export function ToggleActive({
   ) : production ? (
     <HoverCard>
       <HoverCardTrigger
-        className="flex items-center gap-1 text-primary-foreground rounded-lg px-3 py-1 bg-green-700 hover:bg-green-800"
+        className="flex items-center gap-1 text-primary-foreground rounded-lg lg:px-3 lg:py-1 px-2 py-1 bg-green-700 hover:bg-green-800"
         onClick={async (e) => {
           e.stopPropagation();
           setLoading(true);
@@ -83,6 +83,8 @@ export function ToggleActive({
           });
           if (!res.success) {
             alert(res.message);
+            setLoading(false);
+            return;
           }
           setLoading(false);
           toast.warn("Production OFF", {
@@ -107,7 +109,7 @@ export function ToggleActive({
   ) : (
     <HoverCard>
       <HoverCardTrigger
-        className="flex items-center gap-1 text-primary-foreground rounded-lg px-3 py-1 bg-red-700 hover:bg-red-800"
+        className="flex items-center gap-1 text-primary-foreground rounded-lg lg:px-3 lg:py-1 px-2 py-1 bg-red-700 hover:bg-red-800"
         onClick={async (e) => {
           e.stopPropagation();
           setLoading(true);
@@ -117,6 +119,8 @@ export function ToggleActive({
           });
           if (!res.success) {
             alert(res.message);
+            setLoading(false);
+            return;
           }
           setLoading(false);
           toast.success("Production ON", {
@@ -145,7 +149,7 @@ export function CopyLink({ id }: { id: string }) {
   return (
     <HoverCard>
       <HoverCardTrigger
-        className="flex items-center gap-1 hover:bg-sky-200 rounded-lg px-2 mr-3 text-black/80"
+        className="flex items-center gap-1 hover:bg-sky-200 rounded-lg lg:text-md text-sm lg:px-2 lg:mr-3 text-black/80"
         onClick={(e) => {
           e.stopPropagation();
           navigator.clipboard.writeText(
@@ -165,7 +169,7 @@ export function CopyLink({ id }: { id: string }) {
         }}
       >
         Copy Link
-        <ClipboardListIcon />
+        <ClipboardListIcon className="lg:w-8 w-5" />
       </HoverCardTrigger>
       <HoverCardContent className="p-0 px-1 m-0 w-fit rounded-xl">
         Copy Link

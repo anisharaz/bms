@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-
 function HomePage() {
   return (
     <div className="flex flex-col items-center gap-8 pt-20">
@@ -12,11 +11,11 @@ function HomePage() {
           <span className="text-sky-500 font-bold"> Deployment Hassle </span>
         </div>
         <div className="lg:text-2xl lg:mt-2 md:text-xl text-md max-w-[80%] text-gray-400 text-center">
-          Create, Edit & and share link any where which can unfurl blink
+          Create, Edit & and share link any where which can unfurl Blink
         </div>
       </div>
       <Link
-        href={"/dashboard/"}
+        href={"/dashboard/account"}
         className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
       >
         Get Started
@@ -26,6 +25,12 @@ function HomePage() {
         autoPlay={true}
         muted
         className="rounded-3xl p-2"
+        loop
+        style={{
+          maxWidth: "1024px",
+          width: "100%",
+          boxShadow: "0 0 20px 0 rgba(0, 0, 0, 0.2)",
+        }}
       />
     </div>
   );

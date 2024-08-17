@@ -18,8 +18,8 @@ async function CreateBlinkPage() {
   });
   user_db?.Blinks.sort();
   return (
-    <div className="flex flex-col gap-3 p-4">
-      <div>
+    <div className="flex flex-col gap-3 lg:p-4 px-1">
+      <div className="px-2 lg:px-0 pt-1 lg:pt-0">
         <CreateBlinkButton />
       </div>
       <div
@@ -27,7 +27,7 @@ async function CreateBlinkPage() {
           overflowY: "auto",
           maxHeight: "83vh",
         }}
-        className="flex flex-col gap-2"
+        className="flex flex-col lg:gap-2 gap-1"
       >
         {user_db?.Blinks.map((d, index) => {
           return (
@@ -38,6 +38,7 @@ async function CreateBlinkPage() {
                 doneCreating: d.doneCreating,
                 productionReady: d.productionready,
                 BlinkName: d.name,
+                WalletAddress: d.walletaddress,
               }}
               index={index}
             >

@@ -7,11 +7,11 @@ async function BalanceCard({ WalletAddress }: { WalletAddress: string }) {
     balance = await conn.getBalance(new PublicKey(WalletAddress));
   } catch (error) {}
   return (
-    <div>
-      <span className="font-bold">Wallet Balance : </span>
+    <div className="lg:text-lg text-sm">
+      <span className="font-bold ">Wallet Balance : </span>
       <span>
         {balance === null ? (
-          <span className="text-red-600">No Wallet Address added</span>
+          <span>No Wallet Address added</span>
         ) : (
           <>
             <span className="text-purple-700">

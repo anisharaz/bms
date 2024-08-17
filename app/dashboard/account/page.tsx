@@ -14,24 +14,24 @@ async function AccountPage() {
     },
   });
   return (
-    <div className="mx-6 my-4 flex flex-col gap-4">
-      <div>
-        <div className="flex justify-between items-center p-4">
+    <div className="lg:mx-6 lg:my-4 my-2 mx-1 flex flex-col gap-4">
+      <div className="lg:block hidden">
+        <div className="flex justify-between items-center lg:p-4">
           <div>
-            {/* {user_db?.premium ? (
+            {user_db?.premium ? (
               <div className="text-xl font-bold">Welcome Back !!</div>
             ) : (
               <Button className="text-black bg-gradient-to-tr from-amber-200 to-amber-500 hover:shadow-md hover:shadow-amber-500">
                 Get Premium
               </Button>
-            )} */}
+            )}
           </div>
-          <div>
+          <div className="lg:block hidden">
             <LogoutButton />
           </div>
         </div>
       </div>
-      <div className="border-gray-400 border rounded-lg p-4 text-xl">
+      <div className="border-gray-400 lg:border rounded-lg lg:p-4 p-2 text-xl">
         {/* <div className=""> */}
         <div>
           <span className="font-bold"> Email: </span>

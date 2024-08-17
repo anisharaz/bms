@@ -18,7 +18,7 @@ function CreateBlinkButton() {
     </Button>
   ) : (
     <>
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
         <Button
           onClick={async () => {
             setLoading(true);
@@ -35,7 +35,6 @@ function CreateBlinkButton() {
             }
             router.push(`/dashboard/blinks/${tempid}`);
           }}
-          size={"lg"}
           className="text-lg"
         >
           New Blink

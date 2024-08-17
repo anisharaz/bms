@@ -25,7 +25,7 @@ const buttonVariants = cva(
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
-        nav_btn: "w-full h-12 px-4 rounded-none text-xl",
+        nav_btn: "w-full lg:h-12 h-8 px-4 rounded-none text-xl",
       },
     },
     defaultVariants: {
