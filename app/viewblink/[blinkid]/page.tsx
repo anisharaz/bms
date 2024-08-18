@@ -22,8 +22,6 @@ export async function generateMetadata({
         {
           // @ts-ignore
           url: blink?.data?.icon,
-          height: 300,
-          width: 500,
           alt: "Blink Icon",
           type: "image/jpg",
         },
