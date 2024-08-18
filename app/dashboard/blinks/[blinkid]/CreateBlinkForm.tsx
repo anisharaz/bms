@@ -131,7 +131,7 @@ function CreateBlinkForm({
           xmlDoc.getElementsByTagName("Location")[0]?.childNodes[0]?.nodeValue;
         let IMGURL = new URL(imageLocation as string);
         IMGURL.hostname = "dalrhzyq3imlu.cloudfront.net";
-        newInstance.data.icon = IMGURL.toString();
+        newInstance.data.icon = decodeURIComponent(IMGURL.toString());
       }
     } else {
       newInstance.data.icon = BlinkData.icon;
