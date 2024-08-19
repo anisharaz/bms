@@ -27,6 +27,22 @@ export async function generateMetadata({
         },
       ],
     },
+    twitter: {
+      card: "summary_large_image",
+      // @ts-ignore
+      title: blink?.data?.title,
+      // @ts-ignore
+      description: blink?.data?.description,
+      creator: "@anisharaz",
+      images: [
+        {
+          // @ts-ignore
+          url: blink?.data?.icon,
+          alt: "Blink Icon",
+          type: "image/jpg",
+        },
+      ],
+    },
   };
 }
 
