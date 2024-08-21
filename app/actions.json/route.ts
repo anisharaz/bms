@@ -11,11 +11,6 @@ export function GET(req: NextRequest) {
           pathPattern: "/viewblink/**",
           apiPath: "/api/blink/**",
         },
-        {
-          // Added /** because the url of action api in the createblink page uses exact /api/createblinklive/:tempid path
-          pathPattern: "/**",
-          apiPath: "/**",
-        },
       ],
     },
     {

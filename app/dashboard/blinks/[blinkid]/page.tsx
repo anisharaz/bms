@@ -13,9 +13,7 @@ async function CreateBlinkForm({ params }: { params: { blinkid: string } }) {
     blinkid: params.blinkid,
   });
 
-  const blink_url = blinkData?.productionready
-    ? `${process.env.NEXTAUTH_URL}/api/blink/${params.blinkid}`
-    : `${process.env.NEXTAUTH_URL}/api/createblinklive/${params.blinkid}`;
+  const blink_url = `${process.env.NEXTAUTH_URL}/viewblink/${params.blinkid}`;
   return (
     <div className="lg:flex gap-5 justify-around">
       <div className="main-child-1 p-2 w-full">

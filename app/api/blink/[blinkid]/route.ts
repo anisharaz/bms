@@ -21,12 +21,17 @@ export async function GET(
       id: params.blinkid,
     },
   });
-  if (BlinkData?.productionready == true && BlinkData.doneCreating == true) {
+  if (BlinkData) {
     return NextResponse.json(BlinkData?.data, {
       headers: ACTIONS_CORS_HEADERS,
     });
   }
-  return NextResponse.json("Blink not ready yet");
+  return NextResponse.json(
+    { message: "blink id doesnot exist" },
+    {
+      headers: ACTIONS_CORS_HEADERS,
+    }
+  );
 }
 
 export const OPTIONS = GET;
