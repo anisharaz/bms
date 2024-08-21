@@ -11,10 +11,10 @@ export function GET(req: NextRequest) {
           pathPattern: "/viewblink/**",
           apiPath: "/api/blink/**",
         },
-        // {
-        //   pathPattern: "/dashboard/blinks/**",
-        //   apiPath: "/api/createblinklive/**",
-        // },
+        {
+          pathPattern: "/dashboard/blinks/**",
+          apiPath: "/api/createblinklive/**",
+        },
       ],
     },
     {
