@@ -10,6 +10,26 @@ export const metadata: Metadata = {
   title: "No Code Blink | BMS",
   description:
     "Create solana Blinks without writing a single line of code or deployment",
+  openGraph: {
+    images: [
+      {
+        url: "https://static.aaraz.me/bms_logo.png",
+        type: "image/png",
+        alt: "BMS",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@anisharaz",
+    images: [
+      {
+        url: "https://static.aaraz.me/bms_logo.png",
+        type: "image/png",
+        alt: "BMS",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

@@ -8,12 +8,12 @@ export function GET(req: NextRequest) {
     {
       rules: [
         {
-          pathPattern: `${process.env.NEXTAUTH_URL}/viewblink/**`,
-          apiPath: `${process.env.NEXTAUTH_URL}/api/blink/**`,
+          pathPattern: "/viewblink/**",
+          apiPath: "/api/blink/**",
         },
         {
-          pathPattern: `${process.env.NEXTAUTH_URL}/**`,
-          apiPath: `${process.env.NEXTAUTH_URL}/**`,
+          pathPattern: "/**",
+          apiPath: "/**",
         },
       ],
     },

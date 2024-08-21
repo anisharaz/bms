@@ -18,6 +18,13 @@ export async function generateMetadata({
     // @ts-ignore
     description: blink?.data?.description,
     openGraph: {
+      // @ts-ignore
+      title: blink?.data?.title,
+      // @ts-ignore
+      description: blink?.data?.description,
+      siteName: "aaraz",
+      locale: "en_US",
+      type: "website",
       images: [
         {
           // @ts-ignore
@@ -38,6 +45,8 @@ export async function generateMetadata({
         {
           // @ts-ignore
           url: blink?.data?.icon,
+          height: 500,
+          width: 200,
           alt: "Blink Icon",
           type: "image/jpg",
         },
