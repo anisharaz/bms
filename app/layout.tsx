@@ -15,6 +15,8 @@ export const metadata: Metadata = {
       {
         url: "https://static.aaraz.me/bms_logo.png",
         type: "image/png",
+        height: 250,
+        width: 250,
         alt: "BMS",
       },
     ],
@@ -26,6 +28,8 @@ export const metadata: Metadata = {
       {
         url: "https://static.aaraz.me/bms_logo.png",
         type: "image/png",
+        height: 250,
+        width: 250,
         alt: "BMS",
       },
     ],

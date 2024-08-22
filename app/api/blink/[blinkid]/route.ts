@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import {
+  ActionGetResponse,
   ActionPostResponse,
   ACTIONS_CORS_HEADERS,
   createPostResponse,
@@ -16,6 +17,19 @@ export async function GET(
   request: Request,
   { params }: { params: { blinkid: string } }
 ) {
+  if (params.blinkid == "**") {
+    const payload: ActionGetResponse = {
+      icon: "https://static.aaraz.me/bms_logo.png",
+      label: "Not Available",
+      title: "Blink ID not defined",
+      description: "Blink ID undefined with **.",
+      disabled: true,
+      error: { message: "Blink ID NOT FOUND" },
+    };
+    return NextResponse.json(payload, {
+      headers: ACTIONS_CORS_HEADERS,
+    });
+  }
   const BlinkData = await prisma.blinks.findFirst({
     where: {
       id: params.blinkid,

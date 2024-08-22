@@ -1,20 +1,19 @@
-import { ACTIONS_CORS_HEADERS } from "@solana/actions";
+import { ACTIONS_CORS_HEADERS, ActionsJson } from "@solana/actions";
 import { NextRequest, NextResponse } from "next/server";
 
 export function GET(req: NextRequest) {
   console.log(req.nextUrl.origin);
 
-  return NextResponse.json(
-    {
-      rules: [
-        {
-          pathPattern: "/viewblink/**",
-          apiPath: "/api/blink/**",
-        },
-      ],
-    },
-    {
-      headers: ACTIONS_CORS_HEADERS,
-    }
-  );
+  const payload: ActionsJson = {
+    rules: [
+      {
+        pathPattern: "/viewblink/**",
+        apiPath: "/api/blink/**",
+      },
+    ],
+  };
+
+  return NextResponse.json(payload, {
+    headers: ACTIONS_CORS_HEADERS,
+  });
 }

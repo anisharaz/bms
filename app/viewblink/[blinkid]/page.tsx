@@ -56,6 +56,21 @@ export async function generateMetadata({
 }
 
 async function ViewBlink({ params }: { params: { blinkid: string } }) {
+  if (params.blinkid == "**") {
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col items-center">
+          <div className="text-3xl font-bold p-4">Invalid Blink ID</div>
+          <a
+            href="/dashboard/blinks"
+            className="text-xl underline text-blue-500 font-bold p-4"
+          >
+            Create one Here
+          </a>
+        </div>
+      </div>
+    );
+  }
   const blink = await prisma.blinks.findUnique({
     where: {
       id: params.blinkid,
