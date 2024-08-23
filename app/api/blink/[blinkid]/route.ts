@@ -2,13 +2,13 @@ import prisma from "@/lib/db";
 import { ACTIONS_CORS_HEADERS, createPostResponse } from "@solana/actions";
 import { ActionPostResponse, ActionGetResponse } from "@dialectlabs/blinks";
 import {
-  Connection,
   LAMPORTS_PER_SOL,
   PublicKey,
   SystemProgram,
   Transaction,
 } from "@solana/web3.js";
 import { NextRequest, NextResponse } from "next/server";
+import { conn } from "@/lib/solana";
 export async function GET(
   request: Request,
   { params }: { params: { blinkid: string } }
@@ -67,10 +67,8 @@ export async function POST(
 
   const myaccount = new PublicKey(Blink?.walletaddress as string);
   const senderaccount = new PublicKey(account);
-  const connection = new Connection(process.env.RPC_URL as string); // Add your rpc url here for better performance
 
-  const { blockhash, lastValidBlockHeight } =
-    await connection.getLatestBlockhash();
+  const { blockhash, lastValidBlockHeight } = await conn.getLatestBlockhash();
   const transaction = new Transaction({
     feePayer: senderaccount,
     blockhash,
