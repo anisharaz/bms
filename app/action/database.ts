@@ -91,16 +91,25 @@ export async function addBlinkData({
   }
 }
 
-// TODO: add error handling
 export async function DeleteBlink({ id }: { id: string }) {
-  const deletedBlink = await prisma.blinks.delete({
-    where: {
-      id: id,
-    },
-  });
-  await Deletes3image({ key: `bms/${deletedBlink.id}.jpg` });
-  revalidatePath(`/dashboard`);
-  return deletedBlink;
+  try {
+    const deletedBlink = await prisma.blinks.delete({
+      where: {
+        id: id,
+      },
+    });
+    await Deletes3image({ key: `bms/${deletedBlink.id}.jpg` });
+    revalidatePath(`/dashboard`);
+    return {
+      success: true,
+      message: "",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Cannot delete blink, try again after refreshing the page",
+    };
+  }
 }
 
 export async function ToggleProductionReady({

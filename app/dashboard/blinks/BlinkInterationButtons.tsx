@@ -33,18 +33,22 @@ export function DeleteButton({ id }: { id: string }) {
             "Are you sure you want to delete this blink?"
           );
           if (make_sure) {
-            await DeleteBlink({ id: id });
-            toast.info("Blink Deleted", {
-              position: "bottom-right",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              transition: Bounce,
-            });
+            const res = await DeleteBlink({ id: id });
+            if (res.success) {
+              toast.info("Blink Deleted", {
+                position: "bottom-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+              });
+            } else {
+              alert(res.message);
+            }
           }
           setLoading(false);
         }}

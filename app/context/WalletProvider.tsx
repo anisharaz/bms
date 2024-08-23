@@ -14,6 +14,7 @@ const WalletModalProviderDynamic = dynamic(
   { ssr: false }
 );
 function WalletContextProvider({ children }: { children: React.ReactNode }) {
+  // TODO: Change the network on user demand
   const endpoint = clusterApiUrl("devnet");
   return (
     <>
