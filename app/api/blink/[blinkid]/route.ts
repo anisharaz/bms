@@ -1,10 +1,6 @@
 import prisma from "@/lib/db";
-import {
-  ActionGetResponse,
-  ActionPostResponse,
-  ACTIONS_CORS_HEADERS,
-  createPostResponse,
-} from "@solana/actions";
+import { ACTIONS_CORS_HEADERS, createPostResponse } from "@solana/actions";
+import { ActionPostResponse, ActionGetResponse } from "@dialectlabs/blinks";
 import {
   Connection,
   LAMPORTS_PER_SOL,
@@ -95,6 +91,12 @@ export async function POST(
       message: `Send ${amount} SOL to ${myaccount.toBase58()}`,
     },
   });
+  payload.links = {
+    next: {
+      type: "post",
+      href: `/api/blink/${params.blinkid}/confirm`,
+    },
+  };
   return NextResponse.json(payload, {
     headers: ACTIONS_CORS_HEADERS,
   });
