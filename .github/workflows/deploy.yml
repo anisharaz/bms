@@ -38,4 +38,4 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           script: |
-            cd bms_dep && docker-compose down --rmi && docker-compose pull && docker-compose up -d
+            cd bms_dep && docker-compose down --rmi && DOCKER_CONFIG=~/.docker/aaraz docker-compose pull && docker-compose up -d
